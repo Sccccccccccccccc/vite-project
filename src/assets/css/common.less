@@ -1,0 +1,209 @@
+@font-face {
+  font-family: 'LESLIE';
+  src: url('../font/LESLIEB_.TTF');
+}
+
+@font-face {
+  font-family: 'Alibaba PuHuiTi';
+  src: url('../font/Alibaba-PuHuiTi-Medium.ttf');
+}
+
+@font-face {
+  font-family: 'YouSheBiaoTiHei';
+  src: url('../font/YouSheBiaoTiHei-2.ttf');
+}
+
+img {
+  width: 100%;
+  height: 100%;
+}
+
+html {
+  font-family: Microsoft YaHei;
+  color: #ffffff;
+  line-height: 1;
+}
+
+body {
+  position: relative;
+  width: 1920px;
+  height: 1080px;
+  transform-origin: left top;
+  user-select: none;
+  overflow: scroll;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.overflow-ellipsis {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.multiline-overflow-ellipsis {
+  overflow: hidden; /*超出的部分隐藏起来。*/
+  text-overflow: ellipsis; /* 支持 IE */
+  display: -webkit-box; //将对象作为弹性伸缩盒子模型显示。
+  -webkit-box-orient: vertical; //从上到下垂直排列子元素（设置伸缩盒子的子元素排列方式）
+  -webkit-line-clamp: 4; //这个属性不是css的规范属性，需要组合上面两个属性，表示显示的行数。
+}
+
+.left-container,
+.right-container,
+.top-container {
+  position: fixed;
+  top: 91px;
+  z-index: 2;
+  width: 449px;
+  height: calc(100% - 91px - 24x);
+}
+.right-container {
+  right: 24px;
+}
+.left-container {
+  left: 24px;
+}
+.top-container {
+   display: flex;
+   //
+  width: auto;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.bottom-container {
+  position: fixed;
+  bottom: 24px;
+  left: 498px;
+  z-index: 2;
+}
+
+.container-item {
+  margin-bottom: 20px;
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.dv-scroll-board {
+  .rows {
+    .ceil {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      & > div {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .details-button {
+        width: 55px;
+        height: 24px;
+        background: rgba(62, 105, 179, 0.3);
+        border: 1px solid #9db4bf;
+        border-radius: 4px;
+        font-size: 12px;
+        text-align: center;
+        line-height: 22px;
+        cursor: pointer;
+      }
+    }
+    .row-item {
+      // margin-bottom: 10px;
+      height: 55px !important;
+      &:first-child {
+        // margin-top: 10px;
+      }
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+  .header {
+    font-size: 16px;
+    color: #fff;
+  }
+}
+
+.middle {
+  vertical-align: middle;
+}
+
+.jump-link {
+  font-size: 14px;
+  color: #66dc95;
+  display: flex;
+  align-items: center;
+  opacity: 0.8;
+  cursor: pointer;
+
+  .icon {
+    width: 6px;
+    height: 10px;
+    margin-left: 10px;
+    margin-bottom: 2px;
+  }
+}
+
+.descriptions-item {
+  display: flex;
+  .pic-1 {
+    width: 121px;
+    height: 170px;
+  }
+
+  .pic-2 {
+    width: 144px;
+    height: 91px;
+  }
+
+  .pic-3 {
+    width: 91px;
+    height: 91px;
+  }
+  .pic-4 {
+    width: 86px;
+    height: 120px;
+  }
+  .pic-5 {
+    width: 126px;
+    height: 80px;
+  }
+  .left-icon {
+    width: 8px;
+    height: 8px;
+    margin-top: 9px;
+    background: #74a8ff;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+
+  .right {
+    font-size: 14px;
+    color: #ffffff;
+
+    .img {
+      background: #74a8ff20;
+      border-radius: 4px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 14px;
+    }
+
+    .right-title {
+      color: #ffffff;
+      margin-bottom: 10px;
+    }
+
+    .text {
+      width: 216px;
+      white-space: pre-wrap;
+      color: #66efff;
+    }
+  }
+}

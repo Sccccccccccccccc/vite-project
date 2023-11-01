@@ -1,0 +1,7 @@
+export * from './village/type'
+export * from './secondary_list/type'
+export * from './tertiary-details/type'
+export * from './map/type'
+export * from './global/type'
+export * from './login/type'
+export * from './permission/type'
