@@ -2,16 +2,14 @@
 
 import structure from '../Home/structure/structure.vue'
 import AMap from '../Home/map/map.vue'
-import myMap from '@/views/map2/map2.vue'
-import myMap3D from '@/views/map/map.vue'
+import leafletMap from '@/components/map/leafletMap.vue'
 </script>
 
 <template>
   <div class="home">
     <div class=" container ">
       <structure> </structure>
-      <AMap></AMap>
-      <myMap3D></myMap3D>
+      <leafletMap></leafletMap>
     </div>
   </div>
 </template>
@@ -20,7 +18,6 @@ import myMap3D from '@/views/map/map.vue'
 .home {
   width: 1920px;
   height: 1080px;
-
   .container {
     width: 100%;
     height: 100%;

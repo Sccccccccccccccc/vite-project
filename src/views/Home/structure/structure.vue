@@ -12,7 +12,7 @@
 <style lang="less" scoped>
 .village-container-background-image {
   position: relative;
-  z-index: 1;
+  z-index: 3;
   
   .left-img,
   .right-img,

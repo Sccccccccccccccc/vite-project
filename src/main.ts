@@ -4,6 +4,9 @@ import App from './App.vue'
 import router from './router'
 import * as echarts from 'echarts'
 import pinia from './store/store'
+import 'normalize.css'
+import '@/assets/css/index.less'
+
 // import { useScreenAdaptation } from './hook/useScreenAdaptation'
 // useScreenAdaptation()
 const app = createApp(App).use(router)

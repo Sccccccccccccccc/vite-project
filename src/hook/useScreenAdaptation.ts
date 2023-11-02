@@ -22,9 +22,13 @@ function screenAdaptation() {
   let currentY = document.documentElement.clientHeight || document.body.clientHeight
   //  1920 * 1080  -> 3840 * 2160
 
+
   // 3.计算缩放比例
   let scaleRatio = currentX / targetX // 参照宽度进行缩放 ( 默认情况 )
   let currentRatio = currentX / currentY // 宽高比率
+
+  console.log("currentRatio:",currentRatio);
+  console.log("Y:",currentY);
 
   // 超宽屏
   if (currentRatio > targetRatio) {
@@ -32,7 +36,7 @@ function screenAdaptation() {
     const body = document.body
     body.setAttribute(
       'style',
-      `width:${targetX}px; height:${targetY}px;transform: scale(${scaleRatio}) translateX(-50%); left: 50%`
+      `width:${targetX}px; height:${targetY}px; transform: scale(${scaleRatio}) ; `
     )
   } else {
     // 4.开始缩放网页
