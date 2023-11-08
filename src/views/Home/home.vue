@@ -7,10 +7,12 @@ import leafletMap from '@/components/map/leafletMap.vue'
 
 <template>
   <div class="home">
+
     <div class=" container ">
       <structure> </structure>
       <leafletMap></leafletMap>
     </div>
+
   </div>
 </template>
 
@@ -18,6 +20,7 @@ import leafletMap from '@/components/map/leafletMap.vue'
 .home {
   width: 1920px;
   height: 1080px;
+
   .container {
     width: 100%;
     height: 100%;

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 
-// import { useScreenAdaptation } from '@/hook/useScreenAdaptation'
-// useScreenAdaptation()
+import { useScreenAdaptation } from '@/hook/useScreenAdaptation'
+useScreenAdaptation()
 
 </script>
 

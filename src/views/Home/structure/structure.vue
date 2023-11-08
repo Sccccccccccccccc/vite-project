@@ -1,11 +1,23 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+
+import top from '../top-container/top-container.vue'
+import left from '../left-container/left-container.vue'
+</script>
 
 <template>
   <div class="village-container-background-image">
-    <div class="left-img" >left</div>
-    <div class="right-img">right</div>
-    <div class="top-img">top</div>
-    <div class="bottom-img">bottom</div>
+    <div class="left-img" >
+        <left></left>
+    </div>
+    <div class="right-img">
+
+    </div>
+    <div class="top-img">
+      <top></top>
+    </div>
+    <div class="bottom-img">
+
+    </div>
   </div>
 </template>
 
@@ -26,7 +38,7 @@
   .left-img,
   .right-img {
     top: 0;
-    width: 518px;
+    width: 218px;//阴影宽度
     height: 1080px;
     color: white;
   }
@@ -49,7 +61,6 @@
 
   .top-img {
     top: 0;
-    height: 203px;
     background: linear-gradient(to bottom, rgba(12, 28, 41), rgba(12, 28, 41, 0));
   }
 

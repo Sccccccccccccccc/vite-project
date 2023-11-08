@@ -11,13 +11,13 @@ let key: any = '2973b4ae6fc25a6f326754a6ffc6eccc'
 
 const initMap = () => {
     
-    //影像地图
+    //卫星地图
     const leaflet = L.tileLayer(`http://t0.tianditu.gov.cn/cia_w/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=cia&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&tk=${key}`)
     
     //标注
     const leafletText = L.tileLayer(`http://t0.tianditu.gov.cn/cia_w/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=cia&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&tk=${key}`)
 
-    //卫星地图
+    //影像地图
     let satelliteTileLayer = L.layerGroup([
         L.tileLayer.chinaProvider('TianDiTu.Satellite.Map', {
             key: key,
@@ -27,7 +27,22 @@ const initMap = () => {
         })
 
     ]);
-    const layers = L.layerGroup([leaflet, leafletText, satelliteTileLayer])
+    //标点
+    var marker = L.marker([	24.6438, 110.6467])
+    var greenIcon = L.icon({
+    iconUrl: '@/assets/img/icon_ld.png',
+    //shadowUrl: 'leaf-shadow.png',
+
+    iconSize:     [38, 95], // size of the icon
+    shadowSize:   [50, 64], // size of the shadow
+    iconAnchor:   [24.6438, 110.6467], // point of the icon which will correspond to marker's location
+    shadowAnchor: [4, 62],  // the same for the shadow
+    popupAnchor:  [24.6438, 110.6467] // point from which the popup should open relative to the iconAnchor
+    });
+
+
+    const layers = L.layerGroup([leaflet, leafletText])
+    
 
     let map = L.map('myMap', {//绑定地图容器的id
         center: [24.8, 110.5], //缩放等级
@@ -35,10 +50,12 @@ const initMap = () => {
         maxZoom: 18,
         minZoom: 3,
         zoomControl: false,
-        layers: [layers],
+        layers: [layers,marker],
         attributionControl: false,  // 移除右下角leaflet标识
     })
+
     satelliteTileLayer.addTo(map);
+
 
     // 设置绘制后的线条颜色等
     map.pm.setPathOptions({
