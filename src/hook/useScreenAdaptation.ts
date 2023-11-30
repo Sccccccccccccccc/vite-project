@@ -26,12 +26,12 @@ function screenAdaptation() {
 
 
   // 3.计算缩放比例
-  let scaleRatio = currentX / targetX // 参照宽度进行缩放 ( 默认情况 )
+  let scaleRatio:any = currentX / targetX // 参照宽度进行缩放 ( 默认情况 )
   let currentRatio = currentX / currentY // 宽高比率
 
   // 超宽屏
   if (currentRatio > targetRatio) {
-    scaleRatio = currentY / targetY // 参照高度进行缩放
+    scaleRatio = Number(currentY / targetY).toFixed(2) // 参照高度进行缩放
     const body = document.body
     body.setAttribute(
       'style',

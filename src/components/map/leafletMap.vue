@@ -11,13 +11,10 @@ import icon_green from '@/assets/img/icon_ld.png'
 let key: any = '2973b4ae6fc25a6f326754a6ffc6eccc'
 
 const initMap = () => {
-
     //卫星地图
     const leaflet = L.tileLayer(`http://t0.tianditu.gov.cn/cia_w/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=cia&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&tk=${key}`)
-
     //标注
     const leafletText = L.tileLayer(`http://t0.tianditu.gov.cn/cia_w/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=cia&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&tk=${key}`)
-
     //影像地图
     let satelliteTileLayer = L.layerGroup([
         L.tileLayer.chinaProvider('TianDiTu.Satellite.Map', {
@@ -28,8 +25,7 @@ const initMap = () => {
         })
 
     ]);
-    
-        
+
     var greenIcon = L.icon({
         iconUrl: icon_green,
         //shadowUrl: 'leaf-shadow.png',
@@ -38,13 +34,17 @@ const initMap = () => {
         iconAnchor: [31,74], // point of the icon which will correspond to marker's location
         //shadowSize: [50, 64], // size of the shadow
         //shadowAnchor: [4, 62],  // the same for the shadow
-        popupAnchor: [0,0] // point from which the popup should open relative to the iconAnchor
+        popupAnchor: [0,-73] // point from which the popup should open relative to the iconAnchor
     });
     //satelliteTileLayer.addTo(map);
 
     //标点
-    var marker  = L.marker([24.6438, 110.6467])
-    var marker1 = L.marker([24.6438, 110.6467],{icon: greenIcon})
+    // 这里使用的是GCJ02坐标
+    var marker1 = L.marker([24.6438, 110.6467],{icon: greenIcon}).bindPopup('Kyiv, Ukraine is the birthplace of Leaflet!');
+    
+    var markers = [
+        marker1
+    ]
 
     const layers = L.layerGroup([leaflet, leafletText,satelliteTileLayer])
     // https://leafletjs.cn/reference.html#map-option
@@ -54,11 +54,10 @@ const initMap = () => {
         maxZoom: 18,
         minZoom: 3,
         zoomControl: false,
-        layers: [layers,marker,marker1 ],//默认添加到地图上的图层组
+        layers: [layers,...markers],//默认添加到地图上的图层组
         attributionControl: false,  // 移除右下角leaflet标识
     })
 
-    
     // 设置绘制后的线条颜色等
     map.pm.setPathOptions({
         color: "orange",

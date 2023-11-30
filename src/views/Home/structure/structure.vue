@@ -1,23 +1,30 @@
 <script setup lang="ts">
 
 import top from '../top-container/top-container.vue'
+import bottom from '../bottom-container/bottom-container.vue'
 import left from '../left-container/left-container.vue'
+import right from '../right-container/right-container.vue'
 </script>
 
 <template>
   <div class="village-container-background-image">
-    <div class="left-img" >
-        <left></left>
-    </div>
-    <div class="right-img">
 
+    <div class="main" style="display: flex; justify-content: space-around; width: 1920px;">
+      <div class="left-img">
+        <left></left>
+      </div>
+      <div class="right-img">
+        <right></right>
+      </div>
     </div>
+
     <div class="top-img">
       <top></top>
     </div>
     <div class="bottom-img">
-
+      <bottom></bottom>
     </div>
+
   </div>
 </template>
 
@@ -25,7 +32,7 @@ import left from '../left-container/left-container.vue'
 .village-container-background-image {
   position: relative;
   z-index: 3;
-  
+
   .left-img,
   .right-img,
   .top-img,
@@ -38,7 +45,7 @@ import left from '../left-container/left-container.vue'
   .left-img,
   .right-img {
     top: 0;
-    width: 218px;//阴影宽度
+    width: 418px; //阴影宽度
     height: 1080px;
     color: white;
   }

@@ -1,22 +1,15 @@
 <script setup lang="ts">
 
-import bottom from '../bottom-container/bottom-container.vue'
-import { defineEmits } from 'vue'
-const $emit = defineEmits(['val'])
-
-const handleValEvent = (data:any) => {
-  console.log("输出传递的参数",data) // 输出传递的参数
-}
 
       
 </script>
 
 
 <template>
-    <div class="left-container" >
+    <div class="right-container" @click=" ">
         <dv-border-box10>
 
-            <div id="box1" class="box1" @val="handleValEvent">
+            <div id="box1" class="box1">
                 Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolore praesentium voluptate consequatur error, saepe ea cupiditate vel ex fuga totam in corporis odio sequi porro quo magni quos eos. Enim!
             </div>
             <div id="box1" class="box1">
@@ -36,7 +29,7 @@ const handleValEvent = (data:any) => {
 <style lang="less">
 
 
-.left-container {
+.right-container {
     top: 6%;
     width: 450px;
     height: 93%;
