@@ -1,50 +1,58 @@
 <script setup lang="ts">
+import { onMounted, reactive } from 'vue';
 
-const title = 'TITLE'
+const config1 = reactive({
+    number: [Math.random() * 100],
+    content: '{nt}',
+})
 
+const changeConfig = () => {
+    setInterval(() => {
+        config1.number[0] += Math.random() * 100
+        console.log("changed");
+    }, 3000)
+}
+
+onMounted(() => {
+    changeConfig();
+})
 </script>
 
 <template>
-    <div class="top-container"> 
-
-        <div class="header-center">
-            <div class="title">
-                {{ title }}
-            </div>
-        </div>
-        
+    <div class="box" @click="console.log('box1')">
+        <dv-border-box10>
+            <!-- http://crender.jiaminghi.com/guide/ -->
+            <dv-digital-flop :config="config1" style="width: 100%; height: 110%;" />
+        </dv-border-box10>
+    </div>
+    <div class="box" @click="console.log('box2')">
+        <dv-border-box10>
+            <!-- http://crender.jiaminghi.com/guide/ -->
+            <dv-digital-flop :config="config1" style="width: 100%; height: 110%;" />
+        </dv-border-box10>
+    </div>
+    <div class="box" @click="console.log('box3')">
+        <dv-border-box10>
+            <!-- http://crender.jiaminghi.com/guide/ -->
+            <dv-digital-flop :config="config1" style="width: 100%; height: 110%;" />
+        </dv-border-box10>
     </div>
 </template>
 
-<style lang="less">
-    .top-container{
-        position: fixed;
-        top: 0;
-        display: flex;
-        width: 1920px;
-        height: 80px;
-        background: url(@/assets/img/img_top_title.png) no-repeat center;
-        background-size: 100%;
-        z-index: 2;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 0px 30px 17px;
-    }
+<style lang="less" scoped>
+.box {
+    background: linear-gradient(to bottom, rgba(12, 28, 41), rgba(12, 28, 41, 0));
+    display: inline-block;
 
-    .header-center {
-        position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
-        display: flex;
-        align-items: center;
+    width: 33.33%;
+    height: 100%;
+    text-align: center;
+    border-radius: 12px;
+    margin: 0 10px 0 10px;
+}
 
-        .title {
-            font-size: 40px;
-            font-weight: 500;
-            color: #FFFFFF;
-            text-shadow: 0px 2px 8px rgba(16, 45, 79, 0.5);
-        }
-  }
-
+.box:hover {
+    background-color: rgb(61, 113, 156);
+    opacity: 0.7;
+}
 </style>

@@ -1,27 +1,42 @@
 <script setup lang="ts">
 
+import Header from '../header-container/header-container.vue'
 import top from '../top-container/top-container.vue'
 import bottom from '../bottom-container/bottom-container.vue'
 import left from '../left-container/left-container.vue'
 import right from '../right-container/right-container.vue'
+import { ref } from 'vue';
+
+let rightFlag = ref(false)
+function close() {
+  rightFlag.value = !rightFlag.value
+  console.log(rightFlag.value);
+}
+
 </script>
 
 <template>
   <div class="village-container-background-image">
-
     <div class="main" style="display: flex; justify-content: space-around; width: 1920px;">
+
       <div class="left-img">
-        <left></left>
+        <left :style="rightFlag == true ? ' left:-24%' : ''"></left>
       </div>
+
       <div class="right-img">
-        <right></right>
+        <right :style="rightFlag == true ? ' right:-24%' : ''"></right>
       </div>
     </div>
 
-    <div class="top-img">
-      <top></top>
+    <div class="header-img">
+      <Header> </Header>
     </div>
-    <div class="bottom-img">
+
+    <div class="top-img" :style="rightFlag == true ? ' top:-10%' : 'top: 8%'"> 
+      <top> </top>
+    </div>
+
+    <div class="bottom-img" @click="close" style=" cursor: pointer;">
       <bottom></bottom>
     </div>
 
@@ -29,6 +44,7 @@ import right from '../right-container/right-container.vue'
 </template>
 
 <style lang="less" scoped>
+
 .village-container-background-image {
   position: relative;
   z-index: 3;
@@ -67,8 +83,14 @@ import right from '../right-container/right-container.vue'
   }
 
   .top-img {
-    top: 0;
-    background: linear-gradient(to bottom, rgba(12, 28, 41), rgba(12, 28, 41, 0));
+
+    left: calc(50% - 800px/2);
+    border-radius: 12px;
+    width: 800px;
+    height: 100px;
+    transition: 0.7s;
+    display: flex; 
+
   }
 
   .bottom-img {

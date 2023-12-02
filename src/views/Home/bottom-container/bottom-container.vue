@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-const title = 'CONTROLLER'
+const title = '🕹️CONTROLLER'
 
 import { ref } from 'vue'
 
@@ -16,7 +16,7 @@ const hanlerClick = ()=>{
 <template>
     <div class="bottom-container"> 
 
-        <div class="header-center">
+        <div class="header-center" >
             <div class="title" @click="hanlerClick">
                 {{ title }}
             </div>
@@ -27,33 +27,32 @@ const hanlerClick = ()=>{
 
 <style lang="less">
     .bottom-container{
+        opacity: 0.7;
         position: fixed;
-        top: 50;
+        left: 33%;
         display: flex;
-        width: 890px;
-        height: 80px;
+        width: 34%;
+        height: 54px;
         background-size: 100%;
         z-index: 999;
         display: flex;
         justify-content: space-between;
-        align-items: center;
-        padding: 0px 30px 17px;
+        padding: 0px 30px 0 30px;
         background-color:rgb(31, 129, 137);
+        border-radius: 14px;
     }
 
     .header-center {
-        position: absolute;
         left: 50%;
         transform: translateX(-50%);
         display: flex;
         align-items: center;
-
         .title {
-            font-size: 40px;
+            font-size: 34px;
             font-weight: 500;
             color: #FFFFFF;
             text-shadow: 0px 2px 8px rgba(16, 45, 79, 0.5);
         }
-  }
+    }
 
 </style>

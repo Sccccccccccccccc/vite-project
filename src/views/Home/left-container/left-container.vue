@@ -1,7 +1,7 @@
 <script setup lang="ts">
 
 import bottom from '../bottom-container/bottom-container.vue'
-import { defineEmits } from 'vue'
+import { defineEmits,watch } from 'vue'
 const $emit = defineEmits(['val'])
 
 const handleValEvent = (data:any) => {
@@ -38,6 +38,7 @@ const handleValEvent = (data:any) => {
 
 .left-container {
     top: 6%;
+    transition: 0.5s;
     width: 450px;
     height: 93%;
     opacity: 0.75;
