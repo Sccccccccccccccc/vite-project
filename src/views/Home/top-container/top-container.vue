@@ -9,7 +9,7 @@ const config1 = reactive({
 const changeConfig = () => {
     setInterval(() => {
         config1.number[0] += Math.random() * 100
-        console.log("changed");
+        // console.log("changed");
     }, 3000)
 }
 
@@ -18,7 +18,7 @@ onMounted(() => {
 })
 </script>
 
-<template>
+<template>  
     <div class="box" @click="console.log('box1')">
         <dv-border-box10>
             <!-- http://crender.jiaminghi.com/guide/ -->

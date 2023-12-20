@@ -1,27 +1,14 @@
 <script setup lang="ts">
 
-const title = '🕹️CONTROLLER'
-
 import { ref } from 'vue'
-
-const $emit = defineEmits(['val'])
-
-const hanlerClick = ()=>{
-    console.log('$emit自定义触发事件');
-    $emit('val','This is $emit')
-}
+import { usePermissionStore } from '@/store/permission'
+const permissionStore = usePermissionStore()
 
 </script>
 
 <template>
-    <div class="bottom-container"> 
+    <div class="bottom-container" @click="console.log( permissionStore.constant)"> 
 
-        <div class="header-center" >
-            <div class="title" @click="hanlerClick">
-                {{ title }}
-            </div>
-        </div>
-        
     </div>
 </template>
 

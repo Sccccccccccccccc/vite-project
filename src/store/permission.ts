@@ -16,7 +16,8 @@ export const usePermissionStore = defineStore('permission', {
     currenScreenId: '',
     currenCityCode: '',
     currenCity: '',
-    screenConfig: {}
+    screenConfig: {},
+    constant: true
   }),
   // getters 是 store 的计算属性 (computed)?
   getters: {},
@@ -49,5 +50,6 @@ export const usePermissionStore = defineStore('permission', {
       }
 
     }
+
   }
 })

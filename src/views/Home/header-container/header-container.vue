@@ -1,27 +1,64 @@
 <script setup lang="ts">
 
+
+import useScreenFull from '@/hook/useScreenfull'
+import router from '@/router';
+import { usePermissionStore } from '@/store/permission'
+import { session, local } from '@/utils/storage'
+import { toRefs } from 'vue';
+
+const permissionStore = usePermissionStore()
+const { setCurrenScreenId } = permissionStore
+const { screenConfig, currenScreenId } = toRefs(permissionStore)
+
+
 const title = 'TITLE'
+
+function handleNav(nav: any) {
+
+    //local.set('currentAddressId','')
+    setCurrenScreenId(nav)
+
+    if (nav === 2) {
+        router.push('/myMap2')
+    } else if (nav === 1) {
+        router.push('/home')
+    }else if (nav === 3) {
+        console.log("??");
+        router.push('/blank')
+    }
+    // local.set('currenScreenLat', nav.lat)
+    // local.set('currenScreenLon', nav.lon)
+    // Promise.all(villageRequestArr.map((fn) => fn())).finally(() => {
+    //   // handleClick(-1)
+    //   // loading.value = false
+    // })
+}
+
+
+function TEMP() {
+
+    permissionStore.constant = !permissionStore.constant
+    console.log("permissionStore.constant", permissionStore.constant);
+}
 
 </script>
 
 <template>
     <div class="header-container">
 
-
-
         <div class="header-center">
-            <div class="title">
+            <div class="title" @click="TEMP">
                 {{ title }}
             </div>
         </div>
 
-
         <div class="header-left" style=" margin-left:15%">
             <div class="header-nav">
                 <!-- <div class="header-nav-item " :class="nav.id==currenScreenId?'activeNav':''" v-for="nav in navRight" :key="nav.id" @click="handleNav(nav)">{{nav.name}}</div> -->
-                <div class="header-nav-item">page1</div>
-                <div class="header-nav-item">page2</div>
-                <div class="header-nav-item">page3</div>
+                <div class="header-nav-item" @click="handleNav(1)">page1</div>
+                <div class="header-nav-item" @click="handleNav(2)">page2</div>
+                <div class="header-nav-item" @click="handleNav(3)">page3</div>
             </div>
 
         </div>

@@ -5,12 +5,12 @@
 
 </template>
 
-<script>
+<script lang="ts">
 
 import { ref } from 'vue'
 import guangxi from '../../assets/GuangXiMapJson/GuangXi.json'
 import guilin from '../../assets/GuangXiMapJson/guilin.json'
-import pingle from '../../assets/GuangXiMapJson/pingle.json'
+// import pingle from '../../assets/GuangXiMapJson/pingle.json'
 
 
 export default {
@@ -116,6 +116,11 @@ export default {
             }
             // 初始化
             var mapChart = this.$echarts.init(document.getElementById('mapChart'));
+
+            // if (mapChart != null && mapChart != '' && mapChart != undefined){
+            //     mapChart.dispose();
+            // }
+
             //地图数据（用于鼠标悬停显示的数据源）
             var data = []
 
@@ -157,39 +162,43 @@ export default {
                     console.log("未录入地图数据");
                     
             }
+            if (mapChart == null) { // 如果不存在，就进行初始化。
+                var mapChart = this.$echarts.init(document.getElementById('mapChart'));
+            } else{
+                mapChart.dispose();
+            }      
 
-            var mapChart = this.$echarts.init(document.getElementById('mapChart'));
             mapChart.setOption(this.mapOption, true);
 
             var that = this;
             var city = ['pingle'];
             var cityText = ['平乐县'];
 
-            mapChart.on('click', function (param) {
+            mapChart.on('click', function (param) { 
                 console.log("？", param.name);
                 that.mapCityCode = city[cityText.indexOf(param.name)] || 'guangxi'
-                that.getCityMapOpt()
+                // that.getCityMapOpt()
             })
 
         },
 
         //显示到区县
-        getCityMapOpt_District() {
-            // console.log("now_District",this.mapCityCode);
-            switch (this.mapCityCode) {
-                case "guilin":  
-                    this.$echarts.registerMap('city', guilin);
-                    break;
-                case "pingle":
-                    this.$echarts.registerMap('city', pingle);
-                    break;
-                default:
-                    console.log("未录入地图数据");
-            }
+        // getCityMapOpt_District() {
+        //     // console.log("now_District",this.mapCityCode);
+        //     switch (this.mapCityCode) {
+        //         case "guilin":  
+        //             this.$echarts.registerMap('city', guilin);
+        //             break;
+        //         case "pingle":
+        //             this.$echarts.registerMap('city', pingle);
+        //             break;
+        //         default:
+        //             console.log("未录入地图数据");
+        //     }
 
-            var mapChart = this.$echarts.init(document.getElementById('mapChart'));
-            mapChart.setOption(this.mapOption, true);
-        },
+        //     var mapChart = this.$echarts.init(document.getElementById('mapChart'));
+        //     mapChart.setOption(this.mapOption, true);
+        // },
 
 
 
@@ -199,7 +208,7 @@ export default {
     mounted() {
         this.drawMapChart();
         this.getCityMapOpt();
-        this.getCityMapOpt_District()
+        // this.getCityMapOpt_District()
     }
 }
 

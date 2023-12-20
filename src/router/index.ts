@@ -20,6 +20,10 @@ const router = createRouter({
         path: '/myMap2',
         component: () => import('../views/map2/map2.vue')
       },
+      {
+        path: '/blank',
+        component: () => import('../views/blankPage/blankPage.vue')
+      },
     ]
   })
   

@@ -5,13 +5,22 @@ import top from '../top-container/top-container.vue'
 import bottom from '../bottom-container/bottom-container.vue'
 import left from '../left-container/left-container.vue'
 import right from '../right-container/right-container.vue'
-import { ref } from 'vue';
+import { ref ,toRefs,watch } from 'vue';
+import { usePermissionStore } from '@/store/permission'
+const permissionStore = usePermissionStore()
 
-let rightFlag = ref(false)
-function close() {
-  rightFlag.value = !rightFlag.value
-  console.log(rightFlag.value);
-}
+let rightFlag = toRefs(permissionStore.constant)
+// function close() {
+//   rightFlag.value = !rightFlag.value
+//   console.log(rightFlag.value);
+// }
+watch(
+  [ ()=> permissionStore.constant ],
+  ()=>{
+    console.log(114514);
+    
+  }
+)
 
 </script>
 
@@ -20,11 +29,11 @@ function close() {
     <div class="main" style="display: flex; justify-content: space-around; width: 1920px;">
 
       <div class="left-img">
-        <left :style="rightFlag == true ? ' left:-24%' : ''"></left>
+        <left :style="permissionStore.constant == true ? ' left:-54%;' : ''"></left>
       </div>
 
       <div class="right-img">
-        <right :style="rightFlag == true ? ' right:-24%' : ''"></right>
+        <right :style="permissionStore.constant == true ? ' right:-54%' : ''"></right>
       </div>
     </div>
 
@@ -32,11 +41,11 @@ function close() {
       <Header> </Header>
     </div>
 
-    <div class="top-img" :style="rightFlag == true ? ' top:-10%' : 'top: 8%'"> 
+    <div class="top-img" :style="permissionStore.constant == true ? ' top:-10%' : 'top: 8%'"> 
       <top> </top>
     </div>
 
-    <div class="bottom-img" @click="close" style=" cursor: pointer;">
+    <div class="bottom-img" style=" cursor: pointer;">
       <bottom></bottom>
     </div>
 
