@@ -37,7 +37,6 @@ function handleNav(nav: any) {
 
 
 function TEMP() {
-
     permissionStore.constant = !permissionStore.constant
     console.log("permissionStore.constant", permissionStore.constant);
 }
@@ -114,11 +113,86 @@ const sourceData = [
     },
 ]
 
-const data = ref(sourceData)
+let arrr = [
+    { id: 1, name: '平乐县', pid: 0 },
+    { id: 2, name: '中关圆盘', pid: 1 },
+    { id: 3, name: '上关圆盘', pid: 1 },
+    { id: 4, name: '黄埔街', pid: 3 },
+    { id: 5, name: '正北街', pid: 3 },
+    { id: 6, name: '平乐一小', pid: 5 },
+    { id: 7, name: '凤凰小区', pid: 5 },
+    { id: 8, name: '妇幼保健院', pid: 4 },
+]
+
+let arr:any = []
+arrr.forEach( ( item,index ) => {
+    arr[index] = { value: item.id, label: item.name, pid: item.pid }
+})
+
+// [
+//     {
+//         "id": 1,
+//         "name": "部门1",
+//         "pid": 0,
+//         "children": [
+//             {
+//                 "id": 2,
+//                 "name": "部门2",
+//                 "pid": 1,
+//                 "children": []
+//             },
+//             {
+//                 "id": 3,
+//                 "name": "部门3",
+//                 "pid": 1,
+//                 "children": [
+//                     // 结果 ,,,
+//                 ]
+//             }
+//         ]
+//     }
+// ]
+//数组转树
+function getTreeData(arr: any) {
+    // 删除 所有 children,以防止多次调用
+    arr.forEach(
+        (item: any) => delete item.children
+    );
+    // 将数据存储为 以 value 为 KEY 的 map 索引数据列
+    var map: any = {};
+    arr.forEach(
+        (item: any) => {
+            (map[item.value] = item);
+        }
+    );
+    console.log("map", map)
+    var val: any = [];
+    arr.forEach(
+        (item: any) => {
+            // 以当前遍历项的pid,去map对象中找到索引的id
+            var parent = map[item.pid];
+            // 如果找到索引，那么说明此项不在顶级当中,那么需要把此项添加到他对应的父级中
+            if (parent) {
+                (parent.children || (parent.children = [])).push(item);
+            }
+            // 如果没有在map中找到对应的索引ID,那么直接把 当前的item添加到 val结果集中，作为顶级
+            else {
+                val.push(item);
+            }
+        });
+    return val;
+}
+let val = getTreeData(arr)
+console.log("val", val);
+
+const data = ref(getTreeData(arr))
 const filterMethod = (value:any) => {
-    data.value = [...sourceData].filter((item) => item.label.includes(value))
+    data.value = [...arr].filter((item) => item.label.includes(value))
 }
 
+function handleChange(value:any) {
+    console.log("handleChange",arrr.filter((item) => item.id === value)[0].name)
+}
 </script>
 
 <template>
@@ -126,8 +200,9 @@ const filterMethod = (value:any) => {
 
         <div style="position: fixed; margin-left: 2%; z-index: 999;">
             <el-tree-select 
+                @change="handleChange"
                 size="large"
-                placeholder="Please select"
+                placeholder="Please select address"
                 v-model="value" 
                 :data="data" 
                 :filter-method="filterMethod" 
