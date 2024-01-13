@@ -6,7 +6,7 @@ import * as L from 'leaflet';
 import 'leaflet.chinatmsproviders';
 import 'leaflet.pm'
 import 'leaflet.pm/dist/leaflet.pm.css'
-import icon_green from '@/assets/img/icon_ld.png' 
+import icon_green from '@/assets/img/icon_ld.png'
 
 let key: any = '2973b4ae6fc25a6f326754a6ffc6eccc'
 
@@ -26,46 +26,64 @@ const initMap = () => {
 
     ]);
 
+    // var divIcon = L.divIcon({
+    //     iconSize: 1,
+    //     iconAnchor: [31, 74],
+    //     html: `<div style="background-color:transition;color:#fff; width:63px; text-align: center;">${address}</div>`,
+    // });
+
+    // 定义一个生成标签HTML的函数
+    function generateLabelHtml(address: any) {
+        return `<div style="background-color:transition;color:#fff; width:63px; text-align: center;">${address}</div>`;
+    }
+
     var greenIcon = L.icon({
         iconUrl: icon_green,
         //shadowUrl: 'leaf-shadow.png',
 
         iconSize: [63, 74], // size of the icon
-        iconAnchor: [31,74], // point of the icon which will correspond to marker's location
+        iconAnchor: [31, 74], // point of the icon which will correspond to marker's location
         //shadowSize: [50, 64], // size of the shadow
         //shadowAnchor: [4, 62],  // the same for the shadow
-        popupAnchor: [0,-73], // point from which the popup should open relative to the iconAnchor
+        popupAnchor: [0, -73], // point from which the popup should open relative to the iconAnchor
 
     });
 
-    var divIcon = L.divIcon({
-        iconSize: 1,
-        iconAnchor: [31,74],
-        html: '<div style="background-color:transition;color:#fff; width:63px; text-align: center;">制药厂</div>',
-    });
 
-    //satelliteTileLayer.addTo(map);
-
-    //标点
-    // 这里使用的是GCJ02坐标
-    var marker1 = L.marker([24.6438, 110.6467],{icon: greenIcon}).bindPopup('电子厂（原制药厂）');
-    var marker_label = L.marker([24.6438, 110.6467],{icon: divIcon});
-
-    var markers = [
-        marker1,marker_label
-    ]
-
-    const layers = L.layerGroup([leaflet, leafletText,satelliteTileLayer])
+    var locations = [
+        { coordinates: [24.6438, 110.6467], name: '制药厂' },
+        { coordinates: [24.6385, 110.6410], name: '平乐一小' }
+    ];
+    var markers = [];
+    var labels = [];
     // https://leafletjs.cn/reference.html#map-option
-    let map = L.map('myMap', {//绑定地图容器的id
-        center: [24.8, 110.5], //地图初始化时的中心点位置
-        zoom: 8,//地图初始化时的缩放等级
+    for (var i = 0; i < locations.length; i++) {
+        var location = locations[i];
+
+        var marker = L.marker(location.coordinates, { icon: greenIcon }).bindPopup(location.name);
+        var label = L.marker(location.coordinates, {
+            icon: L.divIcon({
+                iconSize: 1,
+                iconAnchor: [31, 74],
+                html: generateLabelHtml(location.name), // 调用函数生成HTML
+            })
+        });
+
+        markers.push(marker);
+        labels.push(label);
+    }
+
+    const layers = L.layerGroup([leaflet, leafletText, satelliteTileLayer]);
+    let map = L.map('myMap', {
+        center: [24.8, 110.5],
+        zoom: 8,
         maxZoom: 18,
         minZoom: 3,
         zoomControl: false,
-        layers: [layers,...markers],//默认添加到地图上的图层组
-        attributionControl: false,  // 移除右下角leaflet标识
-    })
+        layers: [layers, ...markers, ...labels],
+        attributionControl: false
+    });
+
 
     // 设置绘制后的线条颜色等
     map.pm.setPathOptions({
@@ -102,7 +120,5 @@ onMounted(() => {
     <div id="myMap" style=" width:1920px ;  height:1080px ;z-index: 2"></div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>
  
