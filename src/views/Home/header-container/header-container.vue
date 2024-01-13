@@ -5,7 +5,7 @@ import useScreenFull from '@/hook/useScreenfull'
 import router from '@/router';
 import { usePermissionStore } from '@/store/permission'
 import { session, local } from '@/utils/storage'
-import { toRefs } from 'vue';
+import { toRefs, ref } from 'vue';
 
 const permissionStore = usePermissionStore()
 const { setCurrenScreenId } = permissionStore
@@ -23,7 +23,7 @@ function handleNav(nav: any) {
         router.push('/myMap2')
     } else if (nav === 1) {
         router.push('/home')
-    }else if (nav === 3) {
+    } else if (nav === 3) {
         console.log("??");
         router.push('/blank')
     }
@@ -42,10 +42,101 @@ function TEMP() {
     console.log("permissionStore.constant", permissionStore.constant);
 }
 
+const value = ref()
+const sourceData = [
+    {
+        value: '1',
+        label: 'Level one 1',
+        children: [
+            {
+                value: '1-1',
+                label: 'Level two 1-1',
+                children: [
+                    {
+                        value: '1-1-1',
+                        label: 'Level three 1-1-1',
+                    },
+                ],
+            },
+        ],
+    },
+    {
+        value: '2',
+        label: 'Level one 2',
+        children: [
+            {
+                value: '2-1',
+                label: 'Level two 2-1',
+                children: [
+                    {
+                        value: '2-1-1',
+                        label: 'Level three 2-1-1',
+                    },
+                ],
+            },
+            {
+                value: '2-2',
+                label: 'Level two 2-2',
+                children: [
+                    {
+                        value: '2-2-1',
+                        label: 'Level three 2-2-1',
+                    },
+                ],
+            },
+        ],
+    },
+    {
+        value: '3',
+        label: 'Level one 3',
+        children: [
+            {
+                value: '3-1',
+                label: 'Level two 3-1',
+                children: [
+                    {
+                        value: '3-1-1',
+                        label: 'Level three 3-1-1',
+                    },
+                ],
+            },
+            {
+                value: '3-2',
+                label: 'Level two 3-2',
+                children: [
+                    {
+                        value: '3-2-1',
+                        label: 'Level three 3-2-1',
+                    },
+                ],
+            },
+        ],
+    },
+]
+
+const data = ref(sourceData)
+const filterMethod = (value:any) => {
+    data.value = [...sourceData].filter((item) => item.label.includes(value))
+}
+
 </script>
 
 <template>
     <div class="header-container">
+
+        <div style="position: fixed; margin-left: 2%; z-index: 999;">
+            <el-tree-select 
+                size="large"
+                placeholder="Please select"
+                v-model="value" 
+                :data="data" 
+                :filter-method="filterMethod" 
+                clearable
+                style="
+                    width: 240px;
+                    color: white;
+                    background: rgb(26, 47, 59)" />
+        </div>
 
         <div class="header-center">
             <div class="title" @click="TEMP">

@@ -14,13 +14,14 @@ let rightFlag = toRefs(permissionStore.constant)
 //   rightFlag.value = !rightFlag.value
 //   console.log(rightFlag.value);
 // }
-watch(
-  [ ()=> permissionStore.constant ],
-  ()=>{
-    console.log(114514);
+
+// watch(
+//   [ ],
+//   ()=>{
+//     console.log("changed");
     
-  }
-)
+//   }
+// )
 
 </script>
 
@@ -45,7 +46,7 @@ watch(
       <top> </top>
     </div>
 
-    <div class="bottom-img" style=" cursor: pointer;">
+    <div class="bottom-img">
       <bottom></bottom>
     </div>
 
@@ -87,8 +88,10 @@ watch(
 
   .top-img,
   .bottom-img {
+    top: 83%;
     right: 0;
-    width: 1920px;
+    width: 43%;
+    left: 28%;
   }
 
   .top-img {

@@ -31,7 +31,7 @@ function screenAdaptation() {
 
   // 超宽屏
   if (currentRatio > targetRatio) {
-    scaleRatio = Number(currentY / targetY).toFixed(2) // 参照高度进行缩放
+    scaleRatio = Number(currentY / targetY).toFixed(1.5) // 参照高度进行缩放
     const body = document.body
     body.setAttribute(
       'style',

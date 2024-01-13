@@ -17,6 +17,11 @@ import leafletMap from '@/components/map/leafletMap.vue'
 </template>
 
 <style lang="less" scoped>
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 .home {
   width: 1920px;
   height: 1080px;

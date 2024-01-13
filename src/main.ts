@@ -8,6 +8,7 @@ import pinia from './store/store'
 import 'normalize.css'
 import '@/assets/css/index.less'
 import DataVVue3 from '@kjgl77/datav-vue3'
+import './styles/element-ui-reset.scss' //自定义的elementUI样式
 
 const app = createApp(App).use(router)
 app.use(router)

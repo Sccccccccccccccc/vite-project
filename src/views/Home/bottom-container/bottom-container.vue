@@ -4,42 +4,100 @@ import { ref } from 'vue'
 import { usePermissionStore } from '@/store/permission'
 const permissionStore = usePermissionStore()
 
+let selector = ref(true);
+function expend() {
+    selector.value = !selector.value
+}
+
 </script>
 
 <template>
-    <div class="bottom-container" @click="console.log( permissionStore.constant)"> 
-
+    <div class="selectorBox" :style="selector === false ? 'top:-60%' : 'top: 15%;opacity: 0;'" >
+        <dv-border-box10>
+            
+        </dv-border-box10>
     </div>
+
+    <dv-border-box10 style="background: black; opacity: 0.75;">
+
+        <div id="box1" class="bottom-container">
+            <div>
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolore praesentium voluptate consequatur error,
+                saepe ea cupiditate vel ex fuga totam in corporis odio sequi porro quo magni quos eos. Enim!
+            </div>
+        </div>
+
+        <div @click="expend" class="selector" :style="selector == true ? 'transform: rotateX(180deg)' : ''">
+            🔼
+        </div>
+
+    </dv-border-box10>
 </template>
 
 <style lang="less">
-    .bottom-container{
-        opacity: 0.7;
-        position: fixed;
-        left: 33%;
-        display: flex;
-        width: 34%;
-        height: 54px;
-        background-size: 100%;
-        z-index: 999;
-        display: flex;
-        justify-content: space-between;
-        padding: 0px 30px 0 30px;
-        background-color:rgb(31, 129, 137);
-        border-radius: 14px;
-    }
+.bottom-container {
+    opacity: 0.8;
+    position: fixed;
+    left: 30%;
+    display: flex;
+    width: 40%;
+    height: 12%;
+    background-size: 100%;
+    z-index: 999;
+    display: flex;
+    justify-content: space-between;
+    padding: 0px 30px 0 30px;
+    border-radius: 14px;
+}
 
-    .header-center {
-        left: 50%;
-        transform: translateX(-50%);
-        display: flex;
-        align-items: center;
-        .title {
-            font-size: 34px;
-            font-weight: 500;
-            color: #FFFFFF;
-            text-shadow: 0px 2px 8px rgba(16, 45, 79, 0.5);
-        }
-    }
+.selector {
+    // background-color: aquamarine;
+    cursor: pointer;
+    scale: 1.5;
+    border-radius: 12px;
+    width: 5%;
+    position: relative;
+    top: 6%;
+    left: 91.5%;
+    text-align: center;
+}
 
+.selectorBox {
+    position: absolute;
+    left: 89%;
+    top: -60%;
+    width: 10%;
+    height: 55%;
+    border-radius: 12px;
+    transition: 0.6s;
+    background-color: aquamarine;
+
+}
+
+.selector1 {
+    // background-color: aquamarine;
+    cursor: pointer;
+    scale: 1.5;
+    border-radius: 12px;
+    width: 5%;
+    position: relative;
+    top: 6%;
+    left: 98%;
+    transform: rotate(180deg);
+    text-align: center;
+}
+
+.header-center {
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+
+    .title {
+        font-size: 34px;
+        font-weight: 500;
+        color: #FFFFFF;
+        text-shadow: 0px 2px 8px rgba(16, 45, 79, 0.5);
+    }
+}
 </style>

@@ -34,16 +34,25 @@ const initMap = () => {
         iconAnchor: [31,74], // point of the icon which will correspond to marker's location
         //shadowSize: [50, 64], // size of the shadow
         //shadowAnchor: [4, 62],  // the same for the shadow
-        popupAnchor: [0,-73] // point from which the popup should open relative to the iconAnchor
+        popupAnchor: [0,-73], // point from which the popup should open relative to the iconAnchor
+
     });
+
+    var divIcon = L.divIcon({
+        iconSize: 1,
+        iconAnchor: [31,74],
+        html: '<div style="background-color:transition;color:#fff; width:63px; text-align: center;">制药厂</div>',
+    });
+
     //satelliteTileLayer.addTo(map);
 
     //标点
     // 这里使用的是GCJ02坐标
-    var marker1 = L.marker([24.6438, 110.6467],{icon: greenIcon}).bindPopup('Kyiv, Ukraine is the birthplace of Leaflet!');
-    
+    var marker1 = L.marker([24.6438, 110.6467],{icon: greenIcon}).bindPopup('电子厂（原制药厂）');
+    var marker_label = L.marker([24.6438, 110.6467],{icon: divIcon});
+
     var markers = [
-        marker1
+        marker1,marker_label
     ]
 
     const layers = L.layerGroup([leaflet, leafletText,satelliteTileLayer])
@@ -90,8 +99,10 @@ onMounted(() => {
 
 <template>
     <!-- 地图容器 -->
-    <div id="myMap" style=" width:1920px ; height:1080px ;z-index: 2"></div>
+    <div id="myMap" style=" width:1920px ;  height:1080px ;z-index: 2"></div>
 </template>
 
-<style scoped></style>
+<style scoped>
+
+</style>
  

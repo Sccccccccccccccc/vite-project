@@ -1,0 +1,6 @@
+// 这里是自定义elementUI的样式，你可以根据需要进行修改。 会在main.ts中引入
+
+.el-select__placeholder {
+    --el-text-color-regular: 'white'; // 设置placeholder文字颜色为白色
+}
+
