@@ -8,7 +8,7 @@ import { session, local } from '@/utils/storage'
 import { toRefs, ref } from 'vue';
 
 const permissionStore = usePermissionStore()
-const { setCurrenScreenId,setCenterLocation } = permissionStore
+const { setCurrenScreenId, setCenterLocation } = permissionStore
 
 const title = 'TITLE'
 
@@ -110,19 +110,22 @@ const sourceData = [
 ]
 //下拉框数据
 let arrr = [
-    { id: 1, name: '平乐县', pid: 0 , },
+    { id: 1, name: '平乐县', pid: 0, },
     { id: 2, name: '中关圆盘', pid: 1 },
     { id: 3, name: '上关圆盘', pid: 1 },
-    { id: 4, name: '黄埔街', pid: 3 },
+    { id: 4, name: '黄埔街（中关）', pid: 2 },
     { id: 5, name: '正北街', pid: 3 },
-    { id: 6, name: '平乐一小', pid: 5,coordinates: [24.6385, 110.6410], },
+    { id: 6, name: '平乐一小', pid: 5, coordinates: [24.6385, 110.6410], },
     { id: 7, name: '凤凰小区', pid: 5 },
-    { id: 8, name: '妇幼保健院', pid: 4 },
-    { id: 9, name: '制药厂', pid: 5 ,coordinates: [24.6438, 110.6467]}
+    { id: 8, name: '妇幼保健院', pid: 12 },
+    { id: 9, name: '制药厂', pid: 5, coordinates: [24.6438, 110.6467] },
+    { id: 10, name: '枫木塘', pid: 4, coordinates: [] },
+    { id: 11, name: '民族中学', pid: 10, coordinates: [24.6350, 110.6449] },
+    { id: 12, name: '黄埔街（上关）', pid: 3 },
 ]
 
-let arr:any = []
-arrr.forEach( ( item,index ) => {
+let arr: any = []
+arrr.forEach((item, index) => {
     arr[index] = { value: item.id, label: item.name, pid: item.pid }
 })
 
@@ -182,14 +185,14 @@ function getTreeData(arr: any) {
 let val = getTreeData(arr)
 
 const data = ref(getTreeData(arr))
-const filterMethod = (value:any) => {
+const filterMethod = (value: any) => {
     data.value = [...arr].filter((item) => item.label.includes(value))
 }
 
-function handleChange(value:any) { //下拉框点击操作
-    console.log("handleChange",arrr.filter((item) => item.id === value)[0].name,value)
-    if( arrr.filter( (item) => item.id === value)[0].coordinates ){
-        setCenterLocation( arrr.filter( (item) => item.id === value)[0].coordinates )
+function handleChange(value: any) { //下拉框点击操作
+    console.log("handleChange", arrr.filter((item) => item.id === value)[0].name, value)
+    if (arrr.filter((item) => item.id === value)[0].coordinates) {
+        setCenterLocation(arrr.filter((item) => item.id === value)[0].coordinates)
         // console.log( arrr.filter( (item) => item.id === value)[0].coordinates );
     }
 }
@@ -200,15 +203,8 @@ function handleChange(value:any) { //下拉框点击操作
     <div class="header-container">
 
         <div style="position: fixed; margin-left: 2%; z-index: 999;">
-            <el-tree-select 
-                @change="handleChange"
-                size="large"
-                placeholder="Please select address"
-                v-model="value" 
-                :data="data" 
-                :filter-method="filterMethod" 
-                clearable
-                style="
+            <el-tree-select @change="handleChange" size="large" placeholder="平乐县" v-model="value" :data="data"
+                :filter-method="filterMethod" clearable style="
                     width: 240px;
                     color: white;
                     background: rgb(26, 47, 59)" />
@@ -237,11 +233,19 @@ function handleChange(value:any) { //下拉框点击操作
                 <div class="header-nav-item">page5</div>
                 <div class="header-nav-item">page6</div>
             </div>
-            <div class="full_screen" @click="useScreenFull" style=" position:fixed; right:3%">
-                <div class="icon">
-                    <img src="@/assets/img/icon_full_screen.png" alt="">
+
+            <div class="user" style=" position:fixed; right:8%; top: 1.7%;" > 
+                <el-icon size="27" >
+                    <User />
+                </el-icon> 
+            </div>
+            <div class="full_screen" @click="useScreenFull" style="display: flex; position:fixed; right:3%">
+
+                <div class="icon" style=" position: fixed; right:5% ; top: 1.74%; transform: rotate(45deg);">
+                    <el-icon size="23"><Rank /></el-icon>
                 </div>
-                <div>全屏</div>
+                全屏
+                
             </div>
         </div>
 
@@ -249,6 +253,10 @@ function handleChange(value:any) { //下拉框点击操作
 </template>
 
 <style lang="less">
+.user:hover{
+    color: #409EFC;
+}
+
 .header-left {
     display: flex;
     // opacity: 0.7;
@@ -295,12 +303,9 @@ function handleChange(value:any) { //下拉框点击操作
         display: flex;
         align-items: center;
         opacity: 0.7;
-
-        .icon {
-            width: 20px;
-            height: 20px;
-            margin-right: 10px;
-        }
+    }
+    .full_screen:hover {
+        color: #409EFC;
     }
 
 }

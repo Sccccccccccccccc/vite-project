@@ -16,6 +16,11 @@ const { mapCenter } = storeToRefs(permissionStore)
 
 let key: any = '2973b4ae6fc25a6f326754a6ffc6eccc'
 
+// 地图的绘制
+// 设置点类型：var greenIcon = L.icon({...
+// 使用L.marker放置注记并存储到一个变量里：var marker = L.marker(location.coordinates, { icon: greenIcon })
+// 将变量添加到layers里
+
 let map: any;
 // https://blog.csdn.net/w87574159/article/details/103202669
 let initMap = () => {
@@ -55,7 +60,8 @@ let initMap = () => {
 
     var locations = [
         { coordinates: [24.6438, 110.6467], name: '制药厂' },
-        { coordinates: [24.6385, 110.6410], name: '平乐一小' }
+        { coordinates: [24.6385, 110.6410], name: '平乐一小' },
+        { coordinates: [24.6350, 110.6449], name: '民族中学' }
     ];
     var markers = [];
     var labels = [];
@@ -88,6 +94,7 @@ let initMap = () => {
     });
 
 
+
     // 设置绘制后的线条颜色等
     map.pm.setPathOptions({
         color: "orange",
@@ -118,9 +125,9 @@ onMounted(() => {
 
     watch(() => mapCenter.value,
         (newValue) => {
-            setTimeout( ()=>{
-                map.panTo( newValue ) 
-            },100)
+            setTimeout(() => {
+                map.panTo(newValue)
+            }, 100)
         }
         // 多选框改变地图中心点的过程：
         // 1.选中多选框触发了pinia里的setCenterLocation;
