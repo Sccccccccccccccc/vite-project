@@ -8,9 +8,7 @@ import { session, local } from '@/utils/storage'
 import { toRefs, ref } from 'vue';
 
 const permissionStore = usePermissionStore()
-const { setCurrenScreenId } = permissionStore
-const { screenConfig, currenScreenId } = toRefs(permissionStore)
-
+const { setCurrenScreenId,setCenterLocation } = permissionStore
 
 const title = 'TITLE'
 
@@ -18,13 +16,11 @@ function handleNav(nav: any) {
 
     //local.set('currentAddressId','')
     setCurrenScreenId(nav)
-
     if (nav === 2) {
         router.push('/myMap2')
     } else if (nav === 1) {
         router.push('/home')
     } else if (nav === 3) {
-        console.log("??");
         router.push('/blank')
     }
     // local.set('currenScreenLat', nav.lat)
@@ -112,16 +108,17 @@ const sourceData = [
         ],
     },
 ]
-
+//下拉框数据
 let arrr = [
-    { id: 1, name: '平乐县', pid: 0 },
+    { id: 1, name: '平乐县', pid: 0 , },
     { id: 2, name: '中关圆盘', pid: 1 },
     { id: 3, name: '上关圆盘', pid: 1 },
     { id: 4, name: '黄埔街', pid: 3 },
     { id: 5, name: '正北街', pid: 3 },
-    { id: 6, name: '平乐一小', pid: 5 },
+    { id: 6, name: '平乐一小', pid: 5,coordinates: [24.6385, 110.6410], },
     { id: 7, name: '凤凰小区', pid: 5 },
     { id: 8, name: '妇幼保健院', pid: 4 },
+    { id: 9, name: '制药厂', pid: 5 ,coordinates: [24.6438, 110.6467]}
 ]
 
 let arr:any = []
@@ -165,7 +162,7 @@ function getTreeData(arr: any) {
             (map[item.value] = item);
         }
     );
-    console.log("map", map)
+    // console.log("map", map)
     var val: any = [];
     arr.forEach(
         (item: any) => {
@@ -183,16 +180,20 @@ function getTreeData(arr: any) {
     return val;
 }
 let val = getTreeData(arr)
-console.log("val", val);
 
 const data = ref(getTreeData(arr))
 const filterMethod = (value:any) => {
     data.value = [...arr].filter((item) => item.label.includes(value))
 }
 
-function handleChange(value:any) {
-    console.log("handleChange",arrr.filter((item) => item.id === value)[0].name)
+function handleChange(value:any) { //下拉框点击操作
+    console.log("handleChange",arrr.filter((item) => item.id === value)[0].name,value)
+    if( arrr.filter( (item) => item.id === value)[0].coordinates ){
+        setCenterLocation( arrr.filter( (item) => item.id === value)[0].coordinates )
+        // console.log( arrr.filter( (item) => item.id === value)[0].coordinates );
+    }
 }
+
 </script>
 
 <template>

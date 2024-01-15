@@ -1,16 +1,25 @@
 <script setup lang="ts">
 
 import 'leaflet/dist/leaflet.css';
-import { onMounted } from 'vue';
+import { onMounted, watch, ref, computed } from 'vue';
 import * as L from 'leaflet';
 import 'leaflet.chinatmsproviders';
 import 'leaflet.pm'
 import 'leaflet.pm/dist/leaflet.pm.css'
 import icon_green from '@/assets/img/icon_ld.png'
+import { local } from '@/utils/storage';
+import { usePermissionStore } from '@/store/permission';
+import { storeToRefs } from 'pinia';
+const permissionStore = usePermissionStore()
+const { mapCenter } = storeToRefs(permissionStore)
+
 
 let key: any = '2973b4ae6fc25a6f326754a6ffc6eccc'
 
-const initMap = () => {
+let map: any;
+// https://blog.csdn.net/w87574159/article/details/103202669
+let initMap = () => {
+    console.log("地图初始化");
     //卫星地图
     const leaflet = L.tileLayer(`http://t0.tianditu.gov.cn/cia_w/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=cia&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&tk=${key}`)
     //标注
@@ -25,12 +34,6 @@ const initMap = () => {
         })
 
     ]);
-
-    // var divIcon = L.divIcon({
-    //     iconSize: 1,
-    //     iconAnchor: [31, 74],
-    //     html: `<div style="background-color:transition;color:#fff; width:63px; text-align: center;">${address}</div>`,
-    // });
 
     // 定义一个生成标签HTML的函数
     function generateLabelHtml(address: any) {
@@ -74,9 +77,9 @@ const initMap = () => {
     }
 
     const layers = L.layerGroup([leaflet, leafletText, satelliteTileLayer]);
-    let map = L.map('myMap', {
-        center: [24.8, 110.5],
-        zoom: 8,
+    map = L.map('myMap', {
+        center: [24.6385, 110.641], // 多选框修改的地图中心点不能直接作用与这里，需要使用map.panTo()方法
+        zoom: 16,
         maxZoom: 18,
         minZoom: 3,
         zoomControl: false,
@@ -105,14 +108,31 @@ const initMap = () => {
     //     cutPolygon: true, // 添加一个按钮以删除图层里面的部分内容
     //     removalMode: true  // 清除图层
     // });
-
     map.pm.setLang('zh');  //设置语言  en, de, it, ru, ro, es, fr, pt_br, zh , nl
-
 }
 
+
 onMounted(() => {
+    console.log(local.get("mapCenter"));
     initMap()
+
+    watch(() => mapCenter.value,
+        (newValue) => {
+            setTimeout( ()=>{
+                map.panTo( newValue ) 
+            },100)
+        }
+        // 多选框改变地图中心点的过程：
+        // 1.选中多选框触发了pinia里的setCenterLocation;
+        // 2.setCenterLocation会将传入的值转化为坐标，并存储到state里的mapCenter;
+        // 3.在该界面引入mapCenter，并使用storeToRef()将其转化为响应式数据(storeTorefs是pinia提供的一个方法，用于将store里的数据转化为响应式数据);
+        // 4.在watch中监听mapCenter的变化，当其值发生变化时，调用setTimeout()方法(不使用setTimeout()方法，有可能会导致地图中心点无法正常显示）；
+        // 5.在setTimeout()方法中，调用map.panTo()方法，将新的中心点坐标传入，实现地图中心点的更新
+    )
+
 })
+
+
 </script>
 
 <template>

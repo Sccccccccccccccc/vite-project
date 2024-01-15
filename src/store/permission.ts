@@ -17,13 +17,18 @@ export const usePermissionStore = defineStore('permission', {
     currenCityCode: '',
     currenCity: '',
     screenConfig: {},
-    constant: true
+    constant: true,
+    mapCenter: [24.6385, 110.6410],
   }),
   // getters 是 store 的计算属性 (computed)?
   getters: {},
   // actions 则是方法 (methods)?
   actions: {
-    setCurrenScreenId(id: any) {
+    setCenterLocation(arr:any ){ //对应上方下拉框，选择改变地图中心点
+      this.mapCenter = arr
+      local.set('mapCenter', this.mapCenter)
+    },
+    setCurrenScreenId(id: any) { //对应上方导航栏，根据currenScreenId跳转页面
       this.currenScreenId = id
       local.set('currenScreenId', this.currenScreenId)
     },
@@ -31,7 +36,6 @@ export const usePermissionStore = defineStore('permission', {
       this.currenCityCode = id
       local.set('currenCityCode', this.currenCityCode)
     },
-
     async getscreenconfig(params: IPermissionType) {
       const res = await getscreenconfig(params)
       this.screenConfig = res
