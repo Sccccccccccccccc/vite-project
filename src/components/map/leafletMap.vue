@@ -82,6 +82,8 @@ let initMap = () => {
         labels.push(label);
     }
 
+
+
     const layers = L.layerGroup([leaflet, leafletText, satelliteTileLayer]);
     map = L.map('myMap', {
         center: [24.6385, 110.641], // 多选框修改的地图中心点不能直接作用与这里，需要使用map.panTo()方法
@@ -92,7 +94,26 @@ let initMap = () => {
         layers: [layers, ...markers, ...labels],
         attributionControl: false
     });
+    
+    var latlngs = [//坐标点按顺时针排列
+        [
+            [24.638632, 110.640044],
+            [24.638705, 110.641853],
+            [24.63804, 110.642204],
+            [24.63776, 110.641091],
+            [24.638053, 110.640901],
+            [24.6381, 110.640297]
+        ],
+        [
+            [24.638964, 110.642246],
+            [24.63895, 110.642565],
+            [24.638541, 110.642603],
+        ]
+    ];
 
+    for (let index = 0; index < latlngs.length; index++) {
+        L.polygon(latlngs[index], { color: 'lime' }).addTo(map);
+    }
 
 
     // 设置绘制后的线条颜色等
@@ -102,8 +123,12 @@ let initMap = () => {
         fillOpacity: 0.8
     });
 
+    map.on('click', (event: any) => {
+        L.popup().setLatLng(event.latlng).setContent(event.latlng.toString()).openOn(map);
+    })
+
     // map.pm.addControls({
-    //     position: "topleft",
+    //     position: "bottomright",
     //     drawPolygon: true, // 添加绘制多边形
     //     drawMarker: false, //添加按钮以绘制标记
     //     drawCircleMarker: true, //添加按钮以绘制圆形标记
@@ -120,7 +145,6 @@ let initMap = () => {
 
 
 onMounted(() => {
-    console.log(local.get("mapCenter"));
     initMap()
 
     watch(() => mapCenter.value,

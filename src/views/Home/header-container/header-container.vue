@@ -152,8 +152,8 @@ arrr.forEach((item, index) => {
 //         ]
 //     }
 // ]
-//数组转树
-function getTreeData(arr: any) {
+
+function getTreeData(arr: any) { // 数组转树
     // 删除 所有 children,以防止多次调用
     arr.forEach(
         (item: any) => delete item.children
