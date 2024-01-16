@@ -5,17 +5,20 @@ import useScreenFull from '@/hook/useScreenfull'
 import router from '@/router';
 import { usePermissionStore } from '@/store/permission'
 import { session, local } from '@/utils/storage'
-import { toRefs, ref } from 'vue';
+import { toRefs, ref, onMounted } from 'vue';
 
 const permissionStore = usePermissionStore()
-const { setCurrenScreenId, setCenterLocation } = permissionStore
+const { setCurrenScreenId, getCurrenScreenId, setCenterLocation } = permissionStore
 
-const title = 'TITLE'
+const title = '平穷快乐'
+
+console.log("??",getCurrenScreenId());
 
 function handleNav(nav: any) {
 
-    //local.set('currentAddressId','')
     setCurrenScreenId(nav)
+    getCurrenScreenId()
+
     if (nav === 2) {
         router.push('/myMap2')
     } else if (nav === 1) {
@@ -23,12 +26,7 @@ function handleNav(nav: any) {
     } else if (nav === 3) {
         router.push('/blank')
     }
-    // local.set('currenScreenLat', nav.lat)
-    // local.set('currenScreenLon', nav.lon)
-    // Promise.all(villageRequestArr.map((fn) => fn())).finally(() => {
-    //   // handleClick(-1)
-    //   // loading.value = false
-    // })
+
 }
 
 
@@ -123,6 +121,8 @@ let arrr = [
     { id: 11, name: '民族中学', pid: 10, coordinates: [24.6350, 110.6449] },
     { id: 12, name: '黄埔街（上关）', pid: 3 },
 ]
+
+
 
 let arr: any = []
 arrr.forEach((item, index) => {
@@ -219,11 +219,10 @@ function handleChange(value: any) { //下拉框点击操作
         <div class="header-left" style=" margin-left:15%">
             <div class="header-nav">
                 <!-- <div class="header-nav-item " :class="nav.id==currenScreenId?'activeNav':''" v-for="nav in navRight" :key="nav.id" @click="handleNav(nav)">{{nav.name}}</div> -->
-                <div class="header-nav-item" @click="handleNav(1)">page1</div>
-                <div class="header-nav-item" @click="handleNav(2)">page2</div>
-                <div class="header-nav-item" @click="handleNav(3)">page3</div>
+                <div :class=" getCurrenScreenId() == 1 ? 'header-nav-item-chosen' : 'header-nav-item' " @click="handleNav(1)">page1</div>
+                <div :class=" getCurrenScreenId() == 2 ? 'header-nav-item-chosen' : 'header-nav-item' " @click="handleNav(2)">page2</div>
+                <div :class=" getCurrenScreenId() == 3 ? 'header-nav-item-chosen' : 'header-nav-item' " @click="handleNav(3)">page3</div>
             </div>
-
         </div>
 
         <div class="header-right" style=" margin-right:15%">
@@ -239,13 +238,12 @@ function handleChange(value: any) { //下拉框点击操作
                     <User />
                 </el-icon> 
             </div>
-            <div class="full_screen" @click="useScreenFull" style="display: flex; position:fixed; right:3%">
 
+            <div class="full_screen" @click="useScreenFull" style="display: flex; position:fixed; right:3%">
                 <div class="icon" style=" position: fixed; right:5% ; top: 1.74%; transform: rotate(45deg);">
                     <el-icon size="23"><Rank /></el-icon>
                 </div>
                 全屏
-                
             </div>
         </div>
 
@@ -310,11 +308,24 @@ function handleChange(value: any) { //下拉框点击操作
 
 }
 
+.header-nav-item-chosen {
+        padding: 0 20px;
+        border-right: 1px solid;
+        color: #FFFFFF;
+        font-weight: 500;
+        opacity: 1;
+        &:last-child {
+            border-right: 0px solid;
+        }
+    }
+
 .header-nav {
     display: flex;
     // opacity: 0.7;
     align-content: center;
     font-size: 20px;
+
+
 
     .header-nav-item {
         cursor: pointer;

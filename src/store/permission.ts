@@ -32,6 +32,10 @@ export const usePermissionStore = defineStore('permission', {
       this.currenScreenId = id
       local.set('currenScreenId', this.currenScreenId)
     },
+    getCurrenScreenId( ){
+      this.currenScreenId = local.get('currenScreenId')
+      return this.currenScreenId
+    },
     setCurrenCityCode(id: any) {
       this.currenCityCode = id
       local.set('currenCityCode', this.currenCityCode)
