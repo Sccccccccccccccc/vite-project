@@ -12,7 +12,7 @@ const { setCurrenScreenId, getCurrenScreenId, setCenterLocation } = permissionSt
 
 const title = '平穷快乐'
 
-console.log("??",getCurrenScreenId());
+// console.log("??",getCurrenScreenId());
 
 function handleNav(nav: any) {
 
