@@ -25,6 +25,8 @@ function handleNav(nav: any) {
         router.push('/home')
     } else if (nav === 3) {
         router.push('/blank')
+    } else if (nav === 4) {
+        router.push('/page4')
     }
 
 }
@@ -219,29 +221,35 @@ function handleChange(value: any) { //下拉框点击操作
         <div class="header-left" style=" margin-left:15%">
             <div class="header-nav">
                 <!-- <div class="header-nav-item " :class="nav.id==currenScreenId?'activeNav':''" v-for="nav in navRight" :key="nav.id" @click="handleNav(nav)">{{nav.name}}</div> -->
-                <div :class=" getCurrenScreenId() == 1 ? 'header-nav-item-chosen' : 'header-nav-item' " @click="handleNav(1)">page1</div>
-                <div :class=" getCurrenScreenId() == 2 ? 'header-nav-item-chosen' : 'header-nav-item' " @click="handleNav(2)">page2</div>
-                <div :class=" getCurrenScreenId() == 3 ? 'header-nav-item-chosen' : 'header-nav-item' " @click="handleNav(3)">page3</div>
+                <div :class="getCurrenScreenId() == 1 ? 'header-nav-item-chosen' : 'header-nav-item'" @click="handleNav(1)">
+                    page1</div>
+                <div :class="getCurrenScreenId() == 2 ? 'header-nav-item-chosen' : 'header-nav-item'" @click="handleNav(2)">
+                    page2</div>
+                <div :class="getCurrenScreenId() == 3 ? 'header-nav-item-chosen' : 'header-nav-item'" @click="handleNav(3)">
+                    page3</div>
             </div>
         </div>
 
         <div class="header-right" style=" margin-right:15%">
             <div class="header-nav">
                 <!-- <div class="header-nav-item " :class="nav.id==currenScreenId?'activeNav':''" v-for="nav in navRight" :key="nav.id" @click="handleNav(nav)">{{nav.name}}</div> -->
-                <div class="header-nav-item">page4</div>
+                <div :class="getCurrenScreenId() == 4 ? 'header-nav-item-chosen' : 'header-nav-item'" @click="handleNav(4)">
+                    page4</div>
                 <div class="header-nav-item">page5</div>
                 <div class="header-nav-item">page6</div>
             </div>
 
-            <div class="user" style=" position:fixed; right:8%; top: 1.7%;" > 
-                <el-icon size="27" >
+            <div class="user" style=" position:fixed; right:8%; top: 1.7%;">
+                <el-icon size="27">
                     <User />
-                </el-icon> 
+                </el-icon>
             </div>
 
             <div class="full_screen" @click="useScreenFull" style="display: flex; position:fixed; right:3%">
                 <div class="icon" style=" position: fixed; right:5% ; top: 1.74%; transform: rotate(45deg);">
-                    <el-icon size="23"><Rank /></el-icon>
+                    <el-icon size="23">
+                        <Rank />
+                    </el-icon>
                 </div>
                 全屏
             </div>
@@ -251,7 +259,7 @@ function handleChange(value: any) { //下拉框点击操作
 </template>
 
 <style lang="less">
-.user:hover{
+.user:hover {
     color: #409EFC;
 }
 
@@ -302,6 +310,7 @@ function handleChange(value: any) { //下拉框点击操作
         align-items: center;
         opacity: 0.7;
     }
+
     .full_screen:hover {
         color: #409EFC;
     }
@@ -309,15 +318,16 @@ function handleChange(value: any) { //下拉框点击操作
 }
 
 .header-nav-item-chosen {
-        padding: 0 20px;
-        border-right: 1px solid;
-        color: #FFFFFF;
-        font-weight: 500;
-        opacity: 1;
-        &:last-child {
-            border-right: 0px solid;
-        }
+    padding: 0 20px;
+    border-right: 1px solid;
+    color: #FFFFFF;
+    font-weight: 500;
+    opacity: 1;
+
+    &:last-child {
+        border-right: 0px solid;
     }
+}
 
 .header-nav {
     display: flex;

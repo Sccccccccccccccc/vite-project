@@ -24,6 +24,10 @@ const router = createRouter({
         path: '/blank',
         component: () => import('../views/blankPage/blankPage.vue')
       },
+      {
+        path: '/page4',
+        component: () => import('../views/page4/page4.vue')
+      },
     ]
   })
   
