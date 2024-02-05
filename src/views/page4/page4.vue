@@ -3,12 +3,12 @@ import { onMounted, ref } from 'vue';
 import Header from '../Home/header-container/header-container.vue';
 
 // 图片位置状态
-const x = ref(0);
-const y = ref(0);
+const x = ref(10);
+const y = ref(10);
 
 // 移动速度和方向
-const dx = ref(2);
-const dy = ref(2);
+const dx = ref(3);
+const dy = ref(3);
 
 // 容器尺寸
 const containerWidth = ref(0);
@@ -23,9 +23,7 @@ onMounted(() => {
     const container = document.querySelector('.container') as HTMLElement;
     containerWidth.value = container.offsetWidth;
     containerHeight.value = container.offsetHeight;
-
     console.log(containerWidth.value, containerHeight.value);
-
 
     // 更新位置的函数
     const updatePosition = () => {
@@ -43,16 +41,15 @@ onMounted(() => {
         else if (dx.value < 0 && dy.value < 0) {
             rotation.value = -90;
         }
-
-         else{
+        else {
             rotation.value = 0; // 其他方向不旋转
         }
 
         // 达到容器边界时反转方向
-        if (x.value <= 0 || x.value + gifWidth >= containerWidth.value) {
+        if ( x.value + gifWidth >= containerWidth.value / 1.8 || x.value + gifWidth < -containerWidth.value / 2.2) {
             dx.value = -dx.value;
         }
-        if (y.value <= 0 || y.value + gifHeight >= containerHeight.value) {
+        if ( y.value + gifHeight >= containerHeight.value / 1.8 || y.value + gifHeight < -containerHeight.value / 2.5) {
             dy.value = -dy.value;
         }
         requestAnimationFrame(updatePosition);
@@ -66,9 +63,12 @@ onMounted(() => {
     <Header></Header>
 
     <div class="container">
-        <div class="gif" :style="{ transform: `translate(${x}px, ${y}px) rotate(${rotation}deg)` }">
-            <img src="@/assets/img/littlePrincess.gif" alt="">
+        <img src="@/assets/img/sky.jpg" alt="" style="z-index: 1;">
+
+        <div class="gif" :style="{ transform: `translate(${x}px, ${y}px) rotate(${rotation}deg)` }" style="z-index: 2;">
+            <img src="@/assets/img/littlePrincess.gif" alt="" >
         </div>
+
     </div>
 </template>
 
@@ -77,17 +77,19 @@ onMounted(() => {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 500px;
-    width: 800px;
+    height: 100vh;
+    width: 100%;
     overflow: hidden;
-    /* 防止滚动条出现 */
-}
+    position: fixed;
 
-.gif {
-    width: 63px;
-    height: 63px;
-    text-align: center;
-    position: absolute;
-    /* 使用绝对定位允许移动 */
+    /* 防止滚动条出现 */
+    .gif {
+        width: 63px;
+        height: 63px;
+        // text-align: center;
+        position: absolute;
+        /* 使用绝对定位允许移动 */
+
+    }
 }
 </style>
