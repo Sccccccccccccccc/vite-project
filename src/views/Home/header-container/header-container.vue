@@ -27,6 +27,8 @@ function handleNav(nav: any) {
         router.push('/blank')
     } else if (nav === 4) {
         router.push('/page4')
+    } else if (nav === 5) {
+        router.push('/page5')
     }
 
 }
@@ -235,7 +237,7 @@ function handleChange(value: any) { //下拉框点击操作
                 <!-- <div class="header-nav-item " :class="nav.id==currenScreenId?'activeNav':''" v-for="nav in navRight" :key="nav.id" @click="handleNav(nav)">{{nav.name}}</div> -->
                 <div :class="getCurrenScreenId() == 4 ? 'header-nav-item-chosen' : 'header-nav-item'" @click="handleNav(4)">
                     page4</div>
-                <div class="header-nav-item">page5</div>
+                <div :class="getCurrenScreenId() == 5 ? 'header-nav-item-chosen' : 'header-nav-item'" @click="handleNav(5)" >page5</div>
                 <div class="header-nav-item">page6</div>
             </div>
 
@@ -282,6 +284,7 @@ function handleChange(value: any) { //下拉框点击操作
     justify-content: space-between;
     align-items: center;
     padding: 0px 30px 17px;
+    z-index: 999;
 }
 
 .header-center {

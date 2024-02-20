@@ -13,31 +13,14 @@ function expend() {
 
 <template>
     <div class="selectorBox" :style="selector === false ? 'top:-60%' : 'top: 15%;opacity: 0;'" >
-        <dv-border-box10>
-            
-        </dv-border-box10>
+        
     </div>
-
-    <dv-border-box10 style="background: black; opacity: 0.75;">
-
-        <div id="box1" class="bottom-container">
-            <div>
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolore praesentium voluptate consequatur error,
-                saepe ea cupiditate vel ex fuga totam in corporis odio sequi porro quo magni quos eos. Enim!
-            </div>
-        </div>
-
-        <div @click="expend" class="selector" :style="selector == true ? 'transform: rotateX(180deg)' : ''">
-            🔼
-        </div>
-
-    </dv-border-box10>
 </template>
 
 <style lang="less">
 .bottom-container {
     opacity: 0.8;
-    position: fixed;
+    position: relative;
     left: 30%;
     display: flex;
     width: 40%;

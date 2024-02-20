@@ -28,6 +28,10 @@ const router = createRouter({
         path: '/page4',
         component: () => import('../views/page4/page4.vue')
       },
+      {
+        path: '/page5',
+        component: () => import('../views/page5/map.vue')
+      },
     ]
   })
   

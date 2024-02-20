@@ -3,8 +3,8 @@ import { onMounted, ref } from 'vue';
 import Header from '../Home/header-container/header-container.vue';
 
 // 图片位置状态
-const x = ref(10);
-const y = ref(10);
+const x = ref(-500);
+const y = ref(-420);
 
 // 移动速度和方向
 const dx = ref(3);
@@ -46,10 +46,10 @@ onMounted(() => {
         }
 
         // 达到容器边界时反转方向
-        if ( x.value + gifWidth >= containerWidth.value / 1.8 || x.value + gifWidth < -containerWidth.value / 2.2) {
+        if (x.value + gifWidth >= containerWidth.value / 1.8 || x.value + gifWidth < -containerWidth.value / 1.8) {
             dx.value = -dx.value;
         }
-        if ( y.value + gifHeight >= containerHeight.value / 1.8 || y.value + gifHeight < -containerHeight.value / 2.5) {
+        if (y.value + gifHeight >= containerHeight.value / 1.8 || y.value + gifHeight < -containerHeight.value / 1.8) {
             dy.value = -dy.value;
         }
         requestAnimationFrame(updatePosition);
@@ -60,13 +60,11 @@ onMounted(() => {
 </script>
 
 <template>
-    <Header></Header>
-
     <div class="container">
         <img src="@/assets/img/sky.jpg" alt="" style="z-index: 1;">
 
         <div class="gif" :style="{ transform: `translate(${x}px, ${y}px) rotate(${rotation}deg)` }" style="z-index: 2;">
-            <img src="@/assets/img/littlePrincess.gif" alt="" >
+            <img src="@/assets/img/littlePrincess.gif" alt="">
         </div>
 
     </div>
@@ -77,7 +75,7 @@ onMounted(() => {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: 100%;
     width: 100%;
     overflow: hidden;
     position: fixed;
@@ -92,4 +90,28 @@ onMounted(() => {
 
     }
 }
-</style>
+
+.slide-enter-active,
+.slide-leave-active {
+    transition: all 0.75s ease-out;
+}
+
+.slide-enter-to {
+    position: absolute;
+    right: 0;
+}
+
+.slide-enter-from {
+    position: absolute;
+    right: -100%;
+}
+
+.slide-leave-to {
+    position: absolute;
+    left: -100%;
+}
+
+.slide-leave-from {
+    position: absolute;
+    left: 0;
+}</style>

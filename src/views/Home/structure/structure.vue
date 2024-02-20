@@ -38,16 +38,16 @@ let rightFlag = toRefs(permissionStore.constant)
       </div>
     </div>
 
-    <div class="header-img">
+    <!-- <div class="header-img">
       <Header> </Header>
-    </div>
+    </div> -->
 
     <div class="top-img" :style="permissionStore.constant == true ? ' top:-10%' : 'top: 8%'"> 
       <top> </top>
     </div>
 
-    <div class="bottom-img">
-      <bottom></bottom>
+    <div class="bottom-img" :style="permissionStore.constant == true ? 'top: 128%' : 'top: 83%'">
+      <bottom ></bottom>
     </div>
 
   </div>
@@ -106,8 +106,8 @@ let rightFlag = toRefs(permissionStore.constant)
   }
 
   .bottom-img {
-    bottom: 0;
     height: 170px;
+    transition: 0.7s;
     background: linear-gradient(to top, rgba(12, 28, 41), rgba(12, 28, 41, 0));
   }
 }
