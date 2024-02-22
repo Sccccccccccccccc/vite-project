@@ -8,6 +8,7 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     BaseMap: typeof import('./src/components/base-map/base-map.vue')['default']
+    Components: typeof import('./src/components/map2/components/index.vue')['default']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElCol: typeof import('element-plus/es')['ElCol']
     ElDescriptions: typeof import('element-plus/es')['ElDescriptions']
@@ -24,6 +25,7 @@ declare module 'vue' {
     ElTree: typeof import('element-plus/es')['ElTree']
     ElTreeSelect: typeof import('element-plus/es')['ElTreeSelect']
     LeafletMap: typeof import('./src/components/map/leafletMap.vue')['default']
+    LeafletMap1: typeof import('./src/components/map2/components/leafletMap1.vue')['default']
     Map_3D: typeof import('./src/components/echartsMap/map_3D.vue')['default']
     Map2: typeof import('./src/components/map2/map2.vue')['default']
     MapBox: typeof import('./src/components/map-box/map-box.vue')['default']
