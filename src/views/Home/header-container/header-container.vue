@@ -237,7 +237,8 @@ function handleChange(value: any) { //下拉框点击操作
                 <!-- <div class="header-nav-item " :class="nav.id==currenScreenId?'activeNav':''" v-for="nav in navRight" :key="nav.id" @click="handleNav(nav)">{{nav.name}}</div> -->
                 <div :class="getCurrenScreenId() == 4 ? 'header-nav-item-chosen' : 'header-nav-item'" @click="handleNav(4)">
                     page4</div>
-                <div :class="getCurrenScreenId() == 5 ? 'header-nav-item-chosen' : 'header-nav-item'" @click="handleNav(5)" >page5</div>
+                <div :class="getCurrenScreenId() == 5 ? 'header-nav-item-chosen' : 'header-nav-item'" @click="handleNav(5)">
+                    page5</div>
                 <div class="header-nav-item">page6</div>
             </div>
 

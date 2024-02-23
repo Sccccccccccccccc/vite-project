@@ -14,19 +14,34 @@ const option = computed(() => {
     return getOptions(props.echartsData)
 })
 
-function throttle(func: any, delay: any) {
-    let lastCallTime = 0;
-
-    return function (...args: Array<any>) {
-        const now = Date.now();
-
-        if (now - lastCallTime >= delay) {
-            func.apply(this, args);
-            lastCallTime = now;
-        }
-    };
+// 节流
+function throttle(func :any, delay :number) {
+	let timer: any = null;
+	return function () {
+		let context = this;
+		let args = arguments;
+		if (!timer) {
+			timer = setTimeout(function () {
+				func.apply(context, args);
+				timer = null;
+			}, delay);
+		}
+	}
 }
 
+// 防抖
+function debounce(func :any, delay :any) {
+	// 维护一个定时器
+	let timer: any = null;
+	return function () {
+		let context = this;
+		let args = arguments;
+		timer && clearTimeout();
+		timer = setTimeout(function () {
+			func.apply(context, args);
+		}, delay);
+	}
+}
 
 useResizeEcharts('mapChart', option, setChartClick)
 function setChartClick(myChart: echartsType) {
@@ -37,29 +52,14 @@ function setChartClick(myChart: echartsType) {
     myChart.on('legendselectchanged', (item: any) => {
     })
 
-
     myChart.on('georoam', (props: any) => {
         let _option: any = myChart.getOption(); //获取option配置
+        _option.geo[1].zoom = _option.geo[0].zoom //同步缩放大小zoom
+        _option.geo[1].center = _option.geo[0].center //同步中心点center
+        _option.geo[2].zoom = _option.geo[0].zoom //同步缩放大小zoom
+        _option.geo[2].center = _option.geo[0].center //同步中心点center
 
-        let mo = _option.geo[0].zoom //获取当前地图的缩放大小
-        let _center = _option.geo[0].center //获取当前地图的中心点
-        console.log("_center", _center);
-
-        if (props.zoom != null && props.zoom != undefined) {
-            //触发缩放
-            for (let i = 1; i < _option.series.length; i++) { //循环遍历series数组
-                _option.geo[i].zoom = mo; //下层geo的缩放等级跟着上层的geo一起改变
-                _option.geo[i].center = mo; //下层的geo的中心位置随着上层geo一起改变
-            }
-        } else {
-            //监听到拖拽结束，重新设置地图的中心点和缩放大小
-            for (let i = 0; i < _option.series.length; i++) { //循环遍历series数组
-                _option.geo[i].center = _center; //下层的geo的中心位置随着上层geo一起改变
-            }
-
-        }
-
-        myChart.setOption(_option)
+        myChart.setOption(_option); //重新设置option数据
     })
 
 }
@@ -70,6 +70,7 @@ function setChartClick(myChart: echartsType) {
 <!-- 地图容器 -->
 <template>
     <div class="mapChart" id="mapChart" ref="mapChart3d"
-        style="width: 1920px; height: 1080px;  position: relative; left: 50%; transform: translateX(-50%);">
+        style="width: 1920px; height: 1080px; background-image: url('../texture.png');
+         position: relative; left: 50%; transform: translateX(-50%);">
     </div>
 </template>

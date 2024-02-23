@@ -1,22 +1,28 @@
 import * as echarts from 'echarts'
 import guangxi from '../../assets/GuangXiMapJson/guangxi.json'
-import  guilin  from '../../assets/GuangXiMapJson/guilin.json'
+import guilin from '../../assets/GuangXiMapJson/guilin.json'
+import texture from './texture.png'
 
-echarts.registerMap('guangxi', guangxi );
+const imageDom = document.createElement("img")
+imageDom.src = texture
+console.log(imageDom);
 
-export const getOptions = ( props: any ) => {
+
+echarts.registerMap('guangxi', guangxi);
+
+export const getOptions = (props: any) => {
     return {
         geo: [
             {
                 // animationDurationUpdate:0, //数据更新动画的时长。
-                animation : false,
+                animation: false,
                 zoom: 1,
                 zlevel: 5,
                 scaleLimit: {
                     min: 1,
                     max: 8,
                 },
-                center:[108.23, 23.63],
+                center: [108.23, 23.63],
                 show: true,
                 map: 'guangxi',
                 roam: true,//是否允许缩放
@@ -45,9 +51,9 @@ export const getOptions = ( props: any ) => {
                 }
             },
             {
-                animationDurationUpdate:0, //数据更新动画的时长。
-                animation : false,
-                center:[108.23, 23.63],
+                animationDurationUpdate: 0, //数据更新动画的时长。
+                animation: false,
+                center: [108.23, 23.63],
                 zoom: 1,
                 zlevel: 4,
                 scaleLimit: {
@@ -61,22 +67,25 @@ export const getOptions = ( props: any ) => {
                 layoutSize: "90%",
                 itemStyle: {
                     normal: {
-                        borderWidth: 3,
+                        borderWidth: 6,
                         borderColor: "rgba(29, 111, 165,0.8)",
                         shadowColor: "rgba(29, 111, 165,1)",
                         shadowBlur: 18, // 阴影大小
-                        areaColor: "rgba(5,21,35,0.03)", // 地图背景色
+                        areaColor: "rgba(5,21,35)", // 地图背景色
                     },
                     emphasis: {
                         areaColor: '#2B91B7',
-                    }
+                    },
+                    areaColor: {
+                        Color: '#eee',
+                    },
                 }
             },
             {
-                animationDurationUpdate:0, //数据更新动画的时长。
-                animation : false,
+                animationDurationUpdate: 0, //数据更新动画的时长。
+                animation: false,
                 map: 'guangxi',
-                center:[108.23, 23.63],
+                center: [108.23, 23.63],
                 zoom: 1,
                 zlevel: 3,
                 scaleLimit: {
@@ -89,7 +98,7 @@ export const getOptions = ( props: any ) => {
                 layoutSize: "90%",
                 itemStyle: {
                     normal: {
-                        borderWidth: 2,
+                        borderWidth: 6,
                         borderColor: "rgba(29, 111, 165,0.8)",
                         shadowColor: "rgba(29, 111, 165,1)",
                         shadowBlur: 18, // 阴影大小
@@ -105,31 +114,21 @@ export const getOptions = ( props: any ) => {
             {
                 type: 'map',
                 map: 'guangxi',
-                center:[108.23, 23.63],
+                geoIndex: 0,       //指定要用哪个geo的配置，这里使用第一个geo，因为第一个geo的显示级别zlevel更高，展示数据需要在最顶层展示
+                //注意：当设置了geoindex以后，就会使用对应geo的label、itemstyle样式，当前series的label等样式就无效了，
+                center: [108.23, 23.63],
                 zoom: 1,
                 zlevel: 4,
-                geoIndex: 0,
                 aspectScale: 0.75, //长宽比
                 left: 10,
                 right: 0,
                 top: 0,
                 bottom: 2,
                 showLegendSymbol: false, // 存在legend时显示
-                label: {
-                    normal: {
-                        show: false
-                    },
-                    emphasis: {
-                        show: false,
-                        textStyle: {
-                            color: '#fff'
-                        }
-                    }
-                },
                 roam: true,
                 itemStyle: {
                     normal: {
-                        areaColor: '#031525',
+                        areaColor: imageDom,
                         borderColor: '#0227ad',
                         borderWidth: 3,
                     },
@@ -138,7 +137,7 @@ export const getOptions = ( props: any ) => {
                         areaColor: '#2B91B7'
                     }
                 },
-                animationDurationUpdate:0,
+                animationDurationUpdate: 0,
                 data: []
             }
         ]
