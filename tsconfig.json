@@ -23,7 +23,7 @@
     "noUnusedLocals": false,//引入未使用提示报错关闭
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "types": ["element-plus/global"],// element* 指定全局组件类型
+    "types": ["element-plus/global","node"],// element* 指定全局组件类型
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
   "references": [{ "path": "./tsconfig.node.json" }]

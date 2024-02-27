@@ -52,6 +52,7 @@ function setChartClick(myChart: echartsType) {
     myChart.on('legendselectchanged', (item: any) => {
     })
 
+	let timer :any = null
     myChart.on('georoam', (props: any) => {
         let _option: any = myChart.getOption(); //获取option配置
         _option.geo[1].zoom = _option.geo[0].zoom //同步缩放大小zoom
@@ -70,7 +71,7 @@ function setChartClick(myChart: echartsType) {
 <!-- 地图容器 -->
 <template>
     <div class="mapChart" id="mapChart" ref="mapChart3d"
-        style="width: 1920px; height: 1080px; background-image: url('../texture.png');
+        style="width: 1920px; height: 1080px;
          position: relative; left: 50%; transform: translateX(-50%);">
     </div>
 </template>
