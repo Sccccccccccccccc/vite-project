@@ -76,13 +76,32 @@ onMounted(() => {
     const handleDrag = (event) => {
         if (isDragging1) {
             const offsetX = event.clientX - slider1.parentElement.offsetLeft - startOffsetX1;
-            slider1.style.left = offsetX + 'px';
+            const maxLeft = 300; // 计算最大的 left 值
+            const leftValue = Math.min(Math.max(offsetX, 0), maxLeft); // 限制 left 值在 [0, maxLeft] 范围内
+            slider1.style.left = leftValue + 'px';
+
+            // 根据偏移量映射 value 值
+            const range = slider1.parentElement.offsetWidth + slider1.offsetWidth; // 这里修正 range 的计算方式
+            console.log(maxLeft);
+            
+            const value = Math.round((leftValue / 10)) + 1; // 范围是 1 到 31
+            document.getElementById('value1').innerText = value.toString().padStart(2, '0'); // 更新 value1 的显示值
         }
+
         if (isDragging2) {
             const offsetX = event.clientX - slider2.parentElement.offsetLeft - startOffsetX2;
-            slider2.style.left = offsetX + 'px';
+            const minLeft = 0; // 计算最小的 left 值
+            const maxLeft = slider2.parentElement.offsetWidth - slider2.offsetWidth; // 计算最大的 left 值
+            const leftValue = Math.min(Math.max(offsetX, minLeft), maxLeft); // 限制 left 值在 [minLeft, maxLeft] 范围内
+            slider2.style.left = leftValue + 'px';
+
+            // 根据偏移量映射 value 值
+            const range = maxLeft - minLeft; // 计算 value 的范围
+            const value = Math.round(((leftValue - minLeft) / range) * 30) + 1; // 范围是 1 到 31
+            document.getElementById('value2').innerText = value.toString().padStart(2, '0'); // 更新 value2 的显示值
         }
     };
+
 
     const handleMouseUp = () => {
         isDragging1 = false;
