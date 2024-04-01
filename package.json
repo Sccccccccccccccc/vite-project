@@ -21,6 +21,7 @@
     "element-plus": "^2.5.1",
     "ezuikit-js": "^7.7.8",
     "gcoord": "^1.0.5",
+    "highlight.js": "^11.9.0",
     "leaflet.chinatmsproviders": "^3.0.4",
     "leaflet.pm": "^2.2.0",
     "lodash": "^4.17.21",

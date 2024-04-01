@@ -29,6 +29,8 @@ function handleNav(nav: any) {
         router.push('/page4')
     } else if (nav === 5) {
         router.push('/page5')
+    } else if (nav === 6) {
+        router.push('/page6')
     }
 
 }
@@ -223,11 +225,14 @@ function handleChange(value: any) { //下拉框点击操作
         <div class="header-left" style=" margin-left:15%">
             <div class="header-nav">
                 <!-- <div class="header-nav-item " :class="nav.id==currenScreenId?'activeNav':''" v-for="nav in navRight" :key="nav.id" @click="handleNav(nav)">{{nav.name}}</div> -->
-                <div :class="getCurrenScreenId() == 1 ? 'header-nav-item-chosen' : 'header-nav-item'" @click="handleNav(1)">
+                <div :class="getCurrenScreenId() == 1 ? 'header-nav-item-chosen' : 'header-nav-item'"
+                    @click="handleNav(1)">
                     page1</div>
-                <div :class="getCurrenScreenId() == 2 ? 'header-nav-item-chosen' : 'header-nav-item'" @click="handleNav(2)">
+                <div :class="getCurrenScreenId() == 2 ? 'header-nav-item-chosen' : 'header-nav-item'"
+                    @click="handleNav(2)">
                     page2</div>
-                <div :class="getCurrenScreenId() == 3 ? 'header-nav-item-chosen' : 'header-nav-item'" @click="handleNav(3)">
+                <div :class="getCurrenScreenId() == 3 ? 'header-nav-item-chosen' : 'header-nav-item'"
+                    @click="handleNav(3)">
                     page3</div>
             </div>
         </div>
@@ -235,11 +240,15 @@ function handleChange(value: any) { //下拉框点击操作
         <div class="header-right" style=" margin-right:15%">
             <div class="header-nav">
                 <!-- <div class="header-nav-item " :class="nav.id==currenScreenId?'activeNav':''" v-for="nav in navRight" :key="nav.id" @click="handleNav(nav)">{{nav.name}}</div> -->
-                <div :class="getCurrenScreenId() == 4 ? 'header-nav-item-chosen' : 'header-nav-item'" @click="handleNav(4)">
+                <div :class="getCurrenScreenId() == 4 ? 'header-nav-item-chosen' : 'header-nav-item'"
+                    @click="handleNav(4)">
                     page4</div>
-                <div :class="getCurrenScreenId() == 5 ? 'header-nav-item-chosen' : 'header-nav-item'" @click="handleNav(5)">
+                <div :class="getCurrenScreenId() == 5 ? 'header-nav-item-chosen' : 'header-nav-item'"
+                    @click="handleNav(5)">
                     page5</div>
-                <div class="header-nav-item">page6</div>
+                <div :class="getCurrenScreenId() == 6 ? 'header-nav-item-chosen' : 'header-nav-item'"
+                    @click="handleNav(6)">
+                    page6</div>
             </div>
 
             <div class="user" style=" position:fixed; right:8%; top: 1.7%;">
