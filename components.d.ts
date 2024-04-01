@@ -9,7 +9,9 @@ declare module 'vue' {
   export interface GlobalComponents {
     BaseMap: typeof import('./src/components/base-map/base-map.vue')['default']
     Components: typeof import('./src/components/map2/components/index.vue')['default']
+    ElCol: typeof import('element-plus/es')['ElCol']
     ElIcon: typeof import('element-plus/es')['ElIcon']
+    ElRow: typeof import('element-plus/es')['ElRow']
     ElTreeSelect: typeof import('element-plus/es')['ElTreeSelect']
     LeafletMap: typeof import('./src/components/map/leafletMap.vue')['default']
     LeafletMap1: typeof import('./src/components/map2/components/leafletMap1.vue')['default']

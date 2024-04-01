@@ -111,13 +111,14 @@
 
         .item-col {
           height: 50px;
-          background-color: transparent;
+          background-color: whitesmoke;
         }
       }
     }
   }
 }
 </style>
+
 <template>
   <div class="scroll-table-warpper">
     <div class="scroll-table-content" :style="{
@@ -144,7 +145,7 @@
             <div :class="(index + 1) % 2 == 0 ? 'table-item is-dark' : 'table-item'
       " v-for="(item, index) in showTableDataList" :key="index">
               <div class="item-col index">
-                {{ item.tableIndex }}
+                {{ index + 1 }}
               </div>
               <div class="item-col goodName">{{ isEmpty(item.goodsName) }}</div>
               <div class="item-col goodNumber">
@@ -168,9 +169,9 @@
 
 <script setup lang="ts">
 
-import { ref, onMounted, watch, defineProps } from "vue";
+import { ref, onMounted, watch, defineProps, computed } from "vue";
+import { requestAnimationFrame, cancelAnimationFrame } from '@/utils/requestAnimationFrame.js'
 
-const showTableDataList = ref<any[]>([]);
 const props = defineProps({
   // 表格数据行高
   itemHeight: {
@@ -202,6 +203,12 @@ const props = defineProps({
   },
 });
 
+// 监听tableDataList变化
+watch(props.tableDataList, (newVal, oldVal) => {
+  // 这里放处理tableDataList变化的逻辑
+  showTableDataList.value = [...newVal];
+  actionTable();
+});
 
 function isEmpty(data: any) {
   if (data !== 0 && !data) {
@@ -210,6 +217,7 @@ function isEmpty(data: any) {
     return data;
   }
 }
+
 function formatDate(dateStr: string) {
   if (!dateStr || dateStr === "") return "-";
   const date = new Date(dateStr);
@@ -221,5 +229,162 @@ function formatDate(dateStr: string) {
   const ss = String(date.getSeconds()).padStart(2, "0");
   return `${yyyy}-${mm}-${dd} ${hh}:${min}:${ss}`;
 }
+
+const tRef = ref('');
+const tableRef = computed(() => {
+  if (!tRef.value || tRef.value === "") {
+    return `${Date.now() + (Math.random() * (19999 - 10000) + 10000 + 1).toFixed(0)}-ScrollTable`;
+  } else {
+    return tRef.value;
+  }
+});
+
+const tableHeight = computed(() => {
+  return props.itemNumber * props.itemHeight;
+});
+const scrollTimeMilliSecond = computed(() => {
+  return (1000 / 60 / props.tableScrollSpeed).toFixed(0);
+});
+
+// // 节流时间间隔倍数（放大执行一次动画所要的帧数，1为1帧执行一次滚动动画）
+// // 越大切换页面的时候会反方向滚的高度越高，后面会慢慢恢复正常
+let tableAddItemFlag = ref(false); // 是否添加了行数
+let tableAddItemNum = ref(0); // 添加的行数(用于无缝轮滚)
+let tableScrollFlag = ref(false) // 是否允许滚动
+let tableSize = ref(0); // 表格总高度
+let tableScrollTimer: any = ref(null); // 滚动定时器
+let throttleNum = ref(100); // 节流时间间隔倍数
+let tableScrollToEnd = ref(false); // 是否滚动到末尾
+let tableDom: any = ref(null); // 表格dom
+let nowScrollTop = ref(0); // 当前滚动高度
+let tableScrollSize = ref(1) // 每次滚动条的高度
+
+const showTableDataList = ref<any[]>(props.tableDataList[0] as any[]);
+
+function getShowTableListData() {
+  const rowNum = props.itemNumber;
+  tableAddItemFlag.value = false;
+  let afterLength = showTableDataList.value!.length;
+
+  showTableDataList.value!.forEach((item, index) => {
+    if (typeof item == "object") item.tableIndex = index + 1;
+    else item = { tableIndex: index, tableData: item };
+  });
+
+  if (showTableDataList.value!?.length <= rowNum) {
+    tableAddItemNum.value = 0;
+    tableScrollFlag.value = false;
+  } else if (
+    showTableDataList.value!?.length > rowNum &&
+    showTableDataList.value!?.length < rowNum * 2
+  ) {
+    tableAddItemNum.value = showTableDataList.value!.length - rowNum;
+  } else {
+    tableAddItemNum.value = rowNum;
+  }
+  if (tableAddItemNum.value > 0) {
+    for (let i = 0, j = 0; i < rowNum; i++, j++)
+      showTableDataList.value!.push(showTableDataList.value[j]);
+    for (
+      let i = afterLength, j = 1;
+      i < showTableDataList.value!.length;
+      i++, j++
+    ) {
+      // console.log("bbb=>", `i:${i},j:${j}`);
+      showTableDataList.value[i].tableIndex = j;
+    }
+    tableScrollFlag.value = true;
+    tableAddItemFlag.value = true;
+  }
+
+  //  console.log( "showTableDataList=>", showTableDataList.value );
+}
+
+function actionTable() {
+  getShowTableListData();
+  tableSize.value = showTableDataList.value.length;
+
+  //如果数据量小于可视区域，则不滚动
+  if (tableSize.value > props.itemNumber) {
+    console.debug("长度满足条件，滚动!", tableSize.value, props.itemNumber);
+    tableScrollFlag.value = true;
+    if (!props.tableScrollSpeed || props.tableScrollSpeed === 1) {
+
+      // props.tableScrollSpeed = 1;
+
+      startScrollByRAF();
+
+    } else if (props.tableScrollSpeed <= 0) {
+      tableScrollFlag.value = false;
+    } else {
+      // startScrollByInterval();
+    }
+  } else {
+    console.debug("长度不足，不滚动!", tableSize.value, props.itemNumber);
+  }
+}
+
+// 获取 tableDom 的函数
+const getTableDom = () => {
+  const table = tableRef.value;
+  tableDom.value = table;
+  console.log( document.getElementsByClassName('table-data-list').length);
+  
+  if (!table) return;
+
+  // 添加点击事件监听器
+  // tableDom.value.addEventListener("click", () => {
+  //   if (tableScrollFlag.value) {
+  //     stopScrollByRAF();
+  //   } else {
+  //     setTimeout(() => {
+  //       tableScrollFlag.value = false;
+  //       actionTable();
+  //     }, 0);
+  //   }
+  // });
+}
+
+function startScrollByRAF() {
+  if (!tableScrollFlag.value) return;
+  // const table = tableDom.value;
+  const domList = document.getElementsByClassName('table-data-list')
+
+  const clientHeight = props.itemNumber * props.itemHeight;
+  const totalHeight = tableSize.value * props.itemHeight;
+  const residueHeight = totalHeight - clientHeight - nowScrollTop.value;
+  if (residueHeight > 0) {
+    nowScrollTop.value += tableScrollSize.value;
+    // table.style.transform = `translateY(${nowScrollTop.value * -1}px)`;
+    
+    for(let i = 0; i < domList.length; i++){
+      domList[i].style.transform = `translateY(${nowScrollTop.value * -1}px)`;
+    }
+    
+  } else {
+    nowScrollTop.value = 0;
+    // table.style.transform = `translateY(${nowScrollTop.value * -1}px)`;
+
+    for(let i = 0; i < domList.length; i++){
+      domList[i].style.transform = `translateY(${nowScrollTop.value * -1}px)`;
+    }
+
+  }
+  tableScrollTimer.value = requestAnimationFrame(startScrollByRAF);
+}
+
+function stopScrollByRAF() {
+  tableScrollFlag.value = false;
+  cancelAnimationFrame(tableScrollTimer.value);
+}
+
+
+onMounted(() => {
+  // console.log(props.tableDataList);
+  actionTable()
+  getTableDom()
+
+})
+
 
 </script>
