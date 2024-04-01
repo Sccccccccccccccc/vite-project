@@ -8,6 +8,7 @@ import myMap from '../../components/echartsMap/map_3D.vue'
     <div class="box" id="map-container">
         <myMap></myMap>
 
+        
     </div>
 
 </template>

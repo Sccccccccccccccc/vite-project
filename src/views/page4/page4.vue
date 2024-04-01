@@ -24,7 +24,6 @@ onMounted(() => {
     containerWidth.value = container.offsetWidth;
     containerHeight.value = container.offsetHeight;
     console.log(containerWidth.value, containerHeight.value);
-
     // 更新位置的函数
     const updatePosition = () => {
         x.value += dx.value;
@@ -54,23 +53,202 @@ onMounted(() => {
         }
         requestAnimationFrame(updatePosition);
     };
-
     requestAnimationFrame(updatePosition);
+
+
+    const slider1 = document.getElementById('slider1');
+    const slider2 = document.getElementById('slider2');
+    let isDragging1 = false;
+    let isDragging2 = false;
+    let startOffsetX1 = 0;
+    let startOffsetX2 = 0;
+
+    const handleMouseDown = (event, isSlider1) => {
+        if (isSlider1) {
+            isDragging1 = true;
+            startOffsetX1 = event.clientX - slider1.offsetLeft;
+        } else {
+            isDragging2 = true;
+            startOffsetX2 = event.clientX - slider2.offsetLeft;
+        }
+    };
+
+    const handleDrag = (event) => {
+        if (isDragging1) {
+            const offsetX = event.clientX - slider1.parentElement.offsetLeft - startOffsetX1;
+            const maxLeft = 300; // 计算最大的 left 值
+            const leftValue = Math.min(Math.max(offsetX, 0), maxLeft); // 限制 left 值在 [0, maxLeft] 范围内
+            slider1.style.left = leftValue + 'px';
+
+            // 根据偏移量映射 value 值
+            const range = slider1.parentElement.offsetWidth + slider1.offsetWidth; // 这里修正 range 的计算方式
+            console.log(maxLeft);
+            
+            const value = Math.round((leftValue / 10)) + 1; // 范围是 1 到 31
+            document.getElementById('value1').innerText = value.toString().padStart(2, '0'); // 更新 value1 的显示值
+        }
+
+        if (isDragging2) {
+            const offsetX = event.clientX - slider2.parentElement.offsetLeft - startOffsetX2;
+            const minLeft = 0; // 计算最小的 left 值
+            const maxLeft = slider2.parentElement.offsetWidth - slider2.offsetWidth; // 计算最大的 left 值
+            const leftValue = Math.min(Math.max(offsetX, minLeft), maxLeft); // 限制 left 值在 [minLeft, maxLeft] 范围内
+            slider2.style.left = leftValue + 'px';
+
+            // 根据偏移量映射 value 值
+            const range = maxLeft - minLeft; // 计算 value 的范围
+            const value = Math.round(((leftValue - minLeft) / range) * 30) + 1; // 范围是 1 到 31
+            document.getElementById('value2').innerText = value.toString().padStart(2, '0'); // 更新 value2 的显示值
+        }
+    };
+
+
+    const handleMouseUp = () => {
+        isDragging1 = false;
+        isDragging2 = false;
+    };
+
+    document.addEventListener('mousedown', (event) => {
+        if (event.target.id === 'slider1') {
+            handleMouseDown(event, true);
+        }
+        if (event.target.id === 'slider2') {
+            handleMouseDown(event, false);
+        }
+    });
+
+    document.addEventListener('mousemove', handleDrag);
+
+    document.addEventListener('mouseup', handleMouseUp);
+
 });
+
+
+
+
+
 </script>
 
 <template>
     <div class="container">
-        <img src="@/assets/img/sky.jpg" alt="" style="z-index: 1;">
+        <!-- <img src="@/assets/img/sky.jpg" alt="" style="z-index: 1;">
 
         <div class="gif" :style="{ transform: `translate(${x}px, ${y}px) rotate(${rotation}deg)` }" style="z-index: 2;">
             <img src="@/assets/img/littlePrincess.gif" alt="">
+        </div> -->
+
+        <div id="slideToolCtrol">
+            <div id="slideToolBorder">
+                <div id="slideTool" class="slideTool">
+                    <div id="slideLeft" class="slideLeft">
+                        <span id="slider1" class="slider1" style="cursor: pointer;">
+                            <span id="value1" value="01">01</span>
+                        </span>
+                    </div>
+                    <div id="slideRight" class="slideRight">
+                        <span id="slider2" class="slider2">
+                            <span id="value2" value="31">31</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
         </div>
 
     </div>
 </template>
 
 <style lang="less" scoped>
+#slideTool {
+    width: 305px;
+    height: 3px;
+    position: relative;
+    background-color: lightgray;
+    display: inline-block;
+}
+
+#slideLeft {
+    width: 0px;
+    height: 3px;
+    background-color: lightgray;
+    position: absolute;
+    z-index: 20;
+}
+
+#slideRight {
+    width: 300px;
+    height: 3px;
+    background: #ab6969;
+    position: absolute;
+}
+
+#slider1 {
+    height: 15px;
+    width: 15px;
+    background: white;
+    border: 1px solid #ab6969;
+    display: block;
+    border-radius: 10px;
+    position: absolute;
+    top: -6px;
+    z-index: 20;
+}
+
+#slider2 {
+    height: 15px;
+    width: 15px;
+    background: white;
+    border: 1px solid #ab6969;
+    display: block;
+    border-radius: 10px;
+    position: absolute;
+    top: -6px;
+    left: 300px;
+    z-index: 20;
+}
+
+#value1 {
+    margin-top: -25px;
+    position: absolute;
+    width: 30px;
+    background-color: black;
+    color: white;
+    text-align: center;
+    margin-left: -20px;
+    border-radius: 3px;
+}
+
+#value2 {
+    margin-top: -25px;
+    position: absolute;
+    width: 30px;
+    background-color: black;
+    color: white;
+    text-align: center;
+    border-radius: 3px;
+}
+
+#slideToolBorder {
+    background-color: white;
+    width: 400px;
+    border: solid 1px rgb(23, 61, 118);
+}
+
+#slideTitle {
+    display: inline-block;
+    background-color: #ab6969;
+    height: 30px;
+    width: 70px;
+    text-align: center;
+    line-height: 30px;
+    /*border-left: solid 1px brown;*/
+    border-right: solid 1px brown;
+}
+
+#titleSpan {
+    color: white;
+}
+
+
 .container {
     display: flex;
     justify-content: center;
@@ -114,4 +292,5 @@ onMounted(() => {
 .slide-leave-from {
     position: absolute;
     left: 0;
-}</style>
+}
+</style>
