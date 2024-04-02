@@ -8,11 +8,11 @@ import { session, local } from '@/utils/storage'
 import { toRefs, ref, onMounted } from 'vue';
 
 const permissionStore = usePermissionStore()
-const { setCurrenScreenId, getCurrenScreenId, setCenterLocation } = permissionStore
+const { setCurrenScreenId, getCurrenScreenId, setCenterLocation, getTopSelectorNavByScreenId } = permissionStore
 
 const title = '平穷快乐'
 
-// console.log("??",getCurrenScreenId());
+console.log("??",getCurrenScreenId(), getTopSelectorNavByScreenId() );
 
 function handleNav(nav: any) {
 
@@ -113,25 +113,11 @@ const sourceData = [
     },
 ]
 //下拉框数据
-let arrr = [
-    { id: 1, name: '平乐县', pid: 0, },
-    { id: 2, name: '中关圆盘', pid: 1 },
-    { id: 3, name: '上关圆盘', pid: 1 },
-    { id: 4, name: '黄埔街（中关）', pid: 2 },
-    { id: 5, name: '正北街', pid: 3 },
-    { id: 6, name: '平乐一小', pid: 5, coordinates: [24.6385, 110.6410], },
-    { id: 7, name: '凤凰小区', pid: 5 },
-    { id: 8, name: '妇幼保健院', pid: 12 },
-    { id: 9, name: '制药厂', pid: 5, coordinates: [24.6438, 110.6467] },
-    { id: 10, name: '枫木塘', pid: 4, coordinates: [] },
-    { id: 11, name: '民族中学', pid: 10, coordinates: [24.6350, 110.6449] },
-    { id: 12, name: '黄埔街（上关）', pid: 3 },
-]
-
+let arrr = getTopSelectorNavByScreenId()
 
 
 let arr: any = []
-arrr.forEach((item, index) => {
+arrr.forEach((item :any, index :any) => {
     arr[index] = { value: item.id, label: item.name, pid: item.pid }
 })
 

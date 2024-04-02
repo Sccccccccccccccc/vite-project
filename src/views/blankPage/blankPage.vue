@@ -1,15 +1,17 @@
 <template>
 
-  <div class="dataList-group-box">
-    <el-row :gutter="20" class="dataList-group">
-      <el-col :lg="12" :md="24" class="dataList">
-        <scrollTable :tableDataList="inboundDataList" :tableScrollSpeed="1" tableTitle="⬆️近20条入库记录" :itemNumber="10">
-        </scrollTable>
-      </el-col>
-    </el-row>
-    <el-row :gutter="20" class="dataList-group"> </el-row>
+  <div style="background-color: aliceblue; width: 50%; position: relative; left: 50%; transform: translateX(-50%); top: 34%;">
+    <div class="dataList-group-box">
+      <el-row :gutter="20" class="dataList-group">
+        <el-col :lg="12" :md="24" class="dataList">
+          <scrollTable :tableDataList="inboundDataList" :tableScrollSpeed="1" tableTitle="⬆️近20条入库记录" :itemNumber="10">
+          </scrollTable>
+        </el-col>
+      </el-row>
+      <el-row :gutter="20" class="dataList-group"> </el-row>
+    </div>
   </div>
-  
+
 </template>
 
 <script setup lang="ts">
@@ -27,22 +29,23 @@ onMounted(() => {
 <style lang="scss" scoped>
 .dataList-group-box {
   position: relative;
-  left: 50%;
-  transform: translateX(-27%);
+  margin-left: 20px;
+
   // width: 100%;
   // height: 400px;
 
   .dataList-group {
-    width: 50%;
+    width: 100%;
     display: flex;
     flex-wrap: nowrap;
-    padding: 0 0 0 5%;
+    // padding: 0 0 0 5%;
+
     // height: 100%;
     // display: flex;
     // align-items: center;
     // justify-content: center;
     .dataList {
-      margin-top: 10%;
+      // margin-top: 10%;
     }
   }
 

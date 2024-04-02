@@ -333,32 +333,34 @@ const domList = document.getElementsByClassName('table-data-list')
 
 // 获取 tableDom 的函数
 const getTableDom = () => {
+  console.log( "domList=>", domList );
+  
   // 遍历 HTMLCollection 中的每个元素
-  Array.from(domList).forEach((element) => {
-    // 添加鼠标悬停事件监听器
-    element.addEventListener("mouseenter", () => {
-      if (tableScrollFlag.value) {
-        stopScrollByRAF();
-      } else {
-        setTimeout(() => {
-          tableScrollFlag.value = false;
-          actionTable();
-        }, 0);
-      }
-    });
-    // 添加鼠标离开事件监听器
-    element.addEventListener("mouseleave", () => {
-      if (tableScrollFlag.value) {
-        stopScrollByRAF();
-      } else {
-        setTimeout(() => {
-          tableScrollFlag.value = false;
-          actionTable();
-        }, 0);
-      }
-    });
+  // Array.from(domList).forEach((element) => {
+  //   // 添加鼠标悬停事件监听器
+  //   element.addEventListener("mouseenter", () => {
+  //     if (tableScrollFlag.value) {
+  //       stopScrollByRAF();
+  //     } else {
+  //       setTimeout(() => {
+  //         tableScrollFlag.value = false;
+  //         actionTable();
+  //       }, 0);
+  //     }
+  //   });
+  //   // 添加鼠标离开事件监听器
+  //   element.addEventListener("mouseleave", () => {
+  //     if (tableScrollFlag.value) {
+  //       stopScrollByRAF();
+  //     } else {
+  //       setTimeout(() => {
+  //         tableScrollFlag.value = false;
+  //         actionTable();
+  //       }, 0);
+  //     }
+  //   });
 
-  });
+  // });
 }
 
 function startScrollByRAF() {

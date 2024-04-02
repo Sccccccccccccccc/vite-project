@@ -131,13 +131,13 @@ onMounted(() => {
 
 <template>
     <div class="container">
-        <!-- <img src="@/assets/img/sky.jpg" alt="" style="z-index: 1;">
+        <img src="@/assets/img/sky.jpg" alt="" style="z-index: 1;">
 
         <div class="gif" :style="{ transform: `translate(${x}px, ${y}px) rotate(${rotation}deg)` }" style="z-index: 2;">
             <img src="@/assets/img/littlePrincess.gif" alt="">
-        </div> -->
+        </div>
 
-        <div id="slideToolCtrol">
+        <!-- <div id="slideToolCtrol">
             <div id="slideToolBorder">
                 <div id="slideTool" class="slideTool">
                     <div id="slideLeft" class="slideLeft">
@@ -152,7 +152,7 @@ onMounted(() => {
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
 
     </div>
 </template>
