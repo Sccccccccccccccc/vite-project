@@ -24,11 +24,6 @@ window.onbeforeunload = function () {
   _beforeUnload_time = new Date().getTime();
 };
 
-
-
-
-
-
 </script>
 
 <template>
