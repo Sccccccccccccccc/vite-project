@@ -48,6 +48,7 @@ import hljs-containerVuePlugin from '@highlightjs/vue-plugin';
     text-align: left;
     background: #21252b;
     box-shadow: 0 10px 30px 0 rgb(0 0 0 / 40%);
+    border-radius: 6px;
 }
 
 /** 3个点 */
