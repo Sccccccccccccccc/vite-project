@@ -1,5 +1,8 @@
 <script setup lang="ts">
 
+import '@/assets/leafLetPlug/leaflet.canvas-markers.js'
+// https://blog.csdn.net/Sakura1998gis/article/details/130014148
+
 import 'leaflet/dist/leaflet.css';
 import { onMounted, watch, ref, computed } from 'vue';
 import * as L from 'leaflet';
@@ -57,12 +60,21 @@ let initMap = () => {
 
     });
 
-
     var locations = [
         { coordinates: [24.6438, 110.6467], name: '制药厂' },
         { coordinates: [24.6385, 110.6410], name: '平乐一小' },
-        { coordinates: [24.6350, 110.6449], name: '民族中学' }
+        { coordinates: [24.6350, 110.6449], name: '民族中学' },
+        { coordinates: [24.638688, 110.638291], name: '马河市场' },
+        { coordinates: [24.636005, 110.632957], name: '印山亭' },
     ];
+
+    // 批量添加模拟数据
+    // for (let i = 0; i < 10000; i++) {
+    //     let lng = Math.random() * 360 - 180;
+    //     let lat = Math.random() * 180 - 90;
+    //     locations.push({ coordinates: [lat, lng], name: '模拟数据' + i });
+    // }
+
     var markers = [];
     var labels = [];
     // https://leafletjs.cn/reference.html#map-option
@@ -94,8 +106,8 @@ let initMap = () => {
         layers: [layers, ...markers, ...labels],
         attributionControl: false
     });
-    
-    var latlngs = [//坐标点按顺时针排列
+
+    var latlngs = [//多边形坐标点按顺时针排列
         [
             [24.638632, 110.640044],
             [24.638705, 110.641853],
@@ -172,4 +184,3 @@ onMounted(() => {
 </template>
 
 <style scoped></style>
- 

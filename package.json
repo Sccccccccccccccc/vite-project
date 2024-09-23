@@ -29,6 +29,7 @@
     "normalize.css": "^8.0.1",
     "pinia": "^2.1.7",
     "screenfull": "^6.0.2",
+    "vite-project": "file:",
     "vue": "^3.3.4",
     "vue-router": "^4.2.5"
   },

@@ -2,6 +2,8 @@
 import "highlight.js/styles/github.css";
 import 'highlight.js/styles/atom-one-dark.css'
 
+import icon1 from "@/components/icon/tempSVG.vue";
+
 let code = `let a = 1;import hljs-containerVuePlugin from '@highlightjs/vue-plugin';import hljs-containerVuePlugin from '@highlightjs/vue-plugin';
 import hljs-containerVuePlugin from '@highlightjs/vue-plugin';
 import hljs-containerVuePlugin from '@highlightjs/vue-plugin';
@@ -27,8 +29,10 @@ import hljs-containerVuePlugin from '@highlightjs/vue-plugin';
 
 <template>
 
-    <div class="hljs-container" codetype="JavaScript">
-        <highlightjs language="JavaScript" :autodetect="true" :code="code"></highlightjs>
+    <div class="hljs-container" codetype="js">
+        <highlightjs language="js" :autodetect="true" :code="code"></highlightjs>
+        
+        <icon1></icon1>
     </div>
 
 </template>

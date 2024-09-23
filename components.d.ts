@@ -20,5 +20,6 @@ declare module 'vue' {
     MapBox: typeof import('./src/components/map-box/map-box.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    TempSVG: typeof import('./src/components/icon/tempSVG.vue')['default']
   }
 }
