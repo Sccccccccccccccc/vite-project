@@ -2,6 +2,7 @@
 
 import '@/assets/leafLetPlug/leaflet.canvas-markers.js'
 // https://blog.csdn.net/Sakura1998gis/article/details/130014148
+// https://blog.csdn.net/YueMiaoL/article/details/140720140
 
 import 'leaflet/dist/leaflet.css';
 import { onMounted, watch, ref, computed } from 'vue';
