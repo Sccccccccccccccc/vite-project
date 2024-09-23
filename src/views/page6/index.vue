@@ -23,21 +23,60 @@ import hljs-containerVuePlugin from '@highlightjs/vue-plugin';
 </template>
 `;
 
+import { useLeafletMap } from "@/hook/useLeafLetMap";
+import { onMounted } from "vue";
+
+// 引入
+const {
+    mapInit,
+    setMapCenter,
+    setMapScale,
+    setMapBounds,
+    setZoomLevels,
+    addMapImgOverLay,
+    addMapMarker,
+    addMapLine,
+    addMapPolygon,
+    addMapPopup,
+    getTemplateNode,
+    getPopupObj,
+    addMapOverLay,
+    removeMapOverLay,
+    removeMapAllOverLay,
+    getMap
+} = useLeafletMap('map')
+
+// 初始化地图
+onMounted(() => {
+    mapInit().then(() => {
+        // 地图初始化完毕后回调操作
+    })
+})
+
 
 </script>
 
 
 <template>
 
-    <div class="hljs-container" codetype="js">
+    <!-- <div class="hljs-container" codetype="js">
         <highlightjs language="js" :autodetect="true" :code="code"></highlightjs>
         
         <icon1></icon1>
+    </div> -->
+
+    <div id="map">
+
     </div>
 
 </template>
 
 <style scoped lang="scss">
+#map {
+    width: 100vw;
+    height: 100vh;
+}
+
 /* 语法高亮 */
 .hljs-container {
     position: relative;
