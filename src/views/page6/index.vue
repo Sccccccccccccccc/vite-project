@@ -26,6 +26,12 @@ import hljs-containerVuePlugin from '@highlightjs/vue-plugin';
 import { useLeafletMap } from "@/hook/useLeafLetMap";
 import { onMounted } from "vue";
 
+import icon_green from '@/assets/img/icon_ld.png'
+import { title } from "process";
+
+import * as L from 'leaflet';
+import '@/assets/leafLetPlug/leaflet.canvas-markers.js'
+
 // 引入
 const {
     mapInit,
@@ -48,11 +54,42 @@ const {
 
 // 初始化地图
 onMounted(() => {
+
     mapInit().then(() => {
         // 地图初始化完毕后回调操作
+        console.log("地图初始化完毕后回调操作");
+        // 启动插入标记的过程
+        setTimeout(() => {
+            add();
+        }, 0);
     })
-})
 
+    const total = 1000;
+    const batchSize = 20; // 一次插入20条
+    let countOfRender = 0;
+    function add() {
+        for (let i = 0; i < batchSize && countOfRender < total; i++) {
+            addMapMarker(
+                { lat: Math.random() * 180 - 90, lng: Math.random() * 360 - 180 },
+                {
+                    title: '测试',
+                },
+                {
+                    iconUrl: icon_green,
+                },
+                (e: any) => {
+                    console.log("error", e);
+                }
+            );
+            countOfRender++;
+        }
+        // 如果还有未渲染的标记，继续请求下一帧
+        if (countOfRender < total) {
+            window.requestAnimationFrame(add);
+        }
+    }
+
+})
 
 </script>
 
@@ -73,8 +110,8 @@ onMounted(() => {
 
 <style scoped lang="scss">
 #map {
-    width: 100vw;
-    height: 100vh;
+    width: 1920px;
+    height: 1080px;
 }
 
 /* 语法高亮 */

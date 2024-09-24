@@ -1,9 +1,13 @@
 import { createVNode, render } from "vue";
-import L from 'leaflet'
+import * as L from 'leaflet';
 
 import 'leaflet.chinatmsproviders';
 import 'leaflet/dist/leaflet.css';
 import { icon } from "leaflet";
+
+import {CanvasMarkerLayer} from "@panzhiyue/leaflet-canvasmarker"
+
+import icon_green from '@/assets/img/icon_ld.png'
 
 // https://blog.csdn.net/YueMiaoL/article/details/140720140
 export const useLeafletMap = (id: any) => {
@@ -15,29 +19,49 @@ export const useLeafletMap = (id: any) => {
         const TDT_KEY = '2973b4ae6fc25a6f326754a6ffc6eccc';
 
         const normalm = L.tileLayer.chinaProvider('TianDiTu.Normal.Map', {
-            ket: TDT_KEY,
+            key: TDT_KEY,
             maxZoom: 18,
-			minZoom: 5
+			minZoom: 3
         })
 
         const normala = L.tileLayer.chinaProvider('TianDiTu.Normal.Annotion', {
 			key: TDT_KEY,
 			maxZoom: 18,
-			minZoom: 5
+			minZoom: 3
 		})
 
-        const normal = L.layerGroup([normalm, normala])
+		//影像地图
+		let satelliteTileLayer = L.layerGroup([
+			L.tileLayer.chinaProvider('TianDiTu.Satellite.Map', {
+				key: TDT_KEY,
+			}),
+			L.tileLayer.chinaProvider('TianDiTu.Satellite.Annotion', {
+				key: TDT_KEY,
+			})
+		]);
+
+		const canvasLayer = new CanvasMarkerLayer();
+		console.log("canvasLayer", canvasLayer);
+
+        const normal = L.layerGroup([
+			// normalm, 
+			normala, 
+			satelliteTileLayer, 
+			canvasLayer
+		])
 
 		// 地图默认配置
 		const defaultMapOption = {
-			renderer: L.canvas(), // 默认矢量图层绘制方法
-			center: [37.03, 111.92],
+			// renderer: L.canvas(), // 默认矢量图层绘制方法
+			// collisionFlg: true, // 是否开启碰撞检测
+			// perferCanvas: true, // 使用canvas渲染
+			center: [24.6385, 110.641],
 			zoom: 16,
 			layers: [normal],
 			zoomControl: false, // 缩放组件
 			logoControl: false, // 去掉logo
 			attributionControl: false, // 去掉右下角logo
-			minZoom: 12,
+			minZoom: 6,
 			maxZoom: 18, //最大显示层级
 			preferCanvas: true,
 			doubleClickZoom: false, // 取消双击放大
