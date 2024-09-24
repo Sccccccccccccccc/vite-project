@@ -49,11 +49,16 @@ const {
     addMapOverLay,
     removeMapOverLay,
     removeMapAllOverLay,
-    getMap
+    getMap,
+
+    addManyMarker
+
 } = useLeafletMap('map')
 
 // 初始化地图
 onMounted(() => {
+
+    // addManyMarker()
 
     mapInit().then(() => {
         // 地图初始化完毕后回调操作

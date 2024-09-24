@@ -40,13 +40,40 @@ export const useLeafletMap = (id: any) => {
 			})
 		]);
 
-		const canvasLayer = new CanvasMarkerLayer();
-		console.log("canvasLayer", canvasLayer);
+
+		// 在canvasLayer上绘制marker
+		var icon = L.icon({
+			iconUrl: icon_green,
+			iconSize: [20, 18],
+			iconAnchor: [10, 9]
+		  });
+
+		  
+		const canvasLayer = new CanvasMarkerLayer({
+			collisionFlg: true
+		})
+
+		var markers = [];
+		for (var i = 0; i < 100; i++) {
+			var marker = L.marker([58.5578 + Math.random() * 1.8, 29.0087 + Math.random() * 3.6], {
+			  icon: icon,
+			  zIndex: 2,
+			  pane: 'markerPane'
+			}).bindPopup("I Am " + i);
+			console.log("marker",marker.options, marker);// TODO
+			
+			
+			canvasLayer.addLayer(marker);
+
+		  }
+		// ————————————————————————————————————————
+
+		console.log("canvasLayer",canvasLayer);
 
         const normal = L.layerGroup([
 			// normalm, 
-			normala, 
-			satelliteTileLayer, 
+			// normala, 
+			// satelliteTileLayer, 
 			canvasLayer
 		])
 
@@ -155,6 +182,13 @@ export const useLeafletMap = (id: any) => {
         marker.addTo(map)
         return marker
     }
+
+	const addManyMarker = () => {
+
+		const markersCanvas = new L.MarkersCanvas(); // 创建一个MarkersCanvas实例
+		console.log(markersCanvas);
+		
+	}
 
 
 	/**
@@ -286,7 +320,9 @@ export const useLeafletMap = (id: any) => {
 		addMapOverLay,
 		removeMapOverLay,
 		removeMapAllOverLay,
-		getMap
+		getMap,
+
+		addManyMarker
 
     }
 
