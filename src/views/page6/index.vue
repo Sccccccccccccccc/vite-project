@@ -73,25 +73,25 @@ onMounted(() => {
     const batchSize = 20; // 一次插入20条
     let countOfRender = 0;
     function add() {
-        for (let i = 0; i < batchSize && countOfRender < total; i++) {
-            addMapMarker(
-                { lat: Math.random() * 180 - 90, lng: Math.random() * 360 - 180 },
-                {
-                    title: '测试',
-                },
-                {
-                    iconUrl: icon_green,
-                },
-                (e: any) => {
-                    console.log("error", e);
-                }
-            );
-            countOfRender++;
-        }
-        // 如果还有未渲染的标记，继续请求下一帧
-        if (countOfRender < total) {
-            window.requestAnimationFrame(add);
-        }
+        // for (let i = 0; i < batchSize && countOfRender < total; i++) {
+        //     addMapMarker(
+        //         { lat: Math.random() * 180 - 90, lng: Math.random() * 360 - 180 },
+        //         {
+        //             title: '测试',
+        //         },
+        //         {
+        //             iconUrl: icon_green,
+        //         },
+        //         (e: any) => {
+        //             console.log("event", e);
+        //         }
+        //     );
+        //     countOfRender++;
+        // }
+        // // 如果还有未渲染的标记，继续请求下一帧
+        // if (countOfRender < total) {
+        //     window.requestAnimationFrame(add);
+        // }
     }
 
 })

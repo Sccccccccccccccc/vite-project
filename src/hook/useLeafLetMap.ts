@@ -40,40 +40,14 @@ export const useLeafletMap = (id: any) => {
 			})
 		]);
 
-
-		// 在canvasLayer上绘制marker
-		var icon = L.icon({
-			iconUrl: icon_green,
-			iconSize: [20, 18],
-			iconAnchor: [10, 9]
-		  });
-
-		  
 		const canvasLayer = new CanvasMarkerLayer({
-			collisionFlg: true
+			collisionFlg: false // 是否开启碰撞检测 
 		})
-
-		var markers = [];
-		for (var i = 0; i < 100; i++) {
-			var marker = L.marker([58.5578 + Math.random() * 1.8, 29.0087 + Math.random() * 3.6], {
-			  icon: icon,
-			  zIndex: 2,
-			  pane: 'markerPane'
-			}).bindPopup("I Am " + i);
-			console.log("marker",marker.options, marker);// TODO
-			
-			
-			canvasLayer.addLayer(marker);
-
-		  }
-		// ————————————————————————————————————————
-
-		console.log("canvasLayer",canvasLayer);
 
         const normal = L.layerGroup([
 			// normalm, 
 			// normala, 
-			// satelliteTileLayer, 
+			satelliteTileLayer, 
 			canvasLayer
 		])
 
@@ -81,7 +55,7 @@ export const useLeafletMap = (id: any) => {
 		const defaultMapOption = {
 			// renderer: L.canvas(), // 默认矢量图层绘制方法
 			// collisionFlg: true, // 是否开启碰撞检测
-			// perferCanvas: true, // 使用canvas渲染
+			perferCanvas: true, // 使用canvas渲染
 			center: [24.6385, 110.641],
 			zoom: 16,
 			layers: [normal],
@@ -95,7 +69,37 @@ export const useLeafletMap = (id: any) => {
 			closePopupOnClick: false // 默认点击地图关闭popup行为
 		}
 		map = new L.Map(id, Object.assign(defaultMapOption, mapOption))
+
+		// 在canvasLayer上绘制marker
+		var icon = L.icon({
+			iconUrl: icon_green,
+			iconSize: [54, 63],
+			iconAnchor: [28, 9]
+		});
+
+		for (var i = 0; i < 100000; i++) {
+			var lat = 24.6385 + Math.random() * 1.8; // 修改为合理的范围
+			var lng = 110.641 + Math.random() * 3.6;
+			var marker = L.marker([lat, lng], {
+				icon: icon,
+				zIndex: 5,
+				pane: 'markerPane'
+			}).bindPopup('Marker ' + i);
+			console.log("marker", i, lat, lng); // 输出坐标
+			canvasLayer.addLayer(marker);
+		}
+		canvasLayer.addTo(map);
+
 		return Promise.resolve() // 回调地图初始化完成
+
+
+		// 渲染10W个marker不卡顿
+		// 1. 使用canvas绘制
+		// 2. 使用canvasMarkerLayer插件，设置canvasLayer图层
+		// 3. 将图层添加到地图上
+		// 4. 将marker添加到canvasLayer图层上
+		// 5. 将canvasLayer图层添加到地图上
+
     }
 
 	// 地图平移
