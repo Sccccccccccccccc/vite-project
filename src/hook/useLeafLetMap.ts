@@ -74,17 +74,21 @@ export const useLeafletMap = (id: any) => {
 		var icon = L.icon({
 			iconUrl: icon_green,
 			iconSize: [54, 63],
-			iconAnchor: [28, 9]
+			iconAnchor: [28 , 34],
+			popupAnchor: [0, -40],
 		});
 
-		for (var i = 0; i < 100000; i++) {
+		for (var i = 0; i < 1000; i++) {
 			var lat = 24.6385 + Math.random() * 1.8; // 修改为合理的范围
 			var lng = 110.641 + Math.random() * 3.6;
+			
 			var marker = L.marker([lat, lng], {
 				icon: icon,
 				zIndex: 5,
 				pane: 'markerPane'
 			}).bindPopup('Marker ' + i);
+
+
 			console.log("marker", i, lat, lng); // 输出坐标
 			canvasLayer.addLayer(marker);
 		}
