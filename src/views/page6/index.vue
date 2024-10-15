@@ -64,9 +64,9 @@ onMounted(() => {
         // 地图初始化完毕后回调操作
         console.log("地图初始化完毕后回调操作");
         // 启动插入标记的过程
-        setTimeout(() => {
-            add();
-        }, 0);
+        // setTimeout(() => {
+        //     add();
+        // }, 0);
     })
 
     const total = 1000;

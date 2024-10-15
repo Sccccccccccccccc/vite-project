@@ -40,8 +40,9 @@ export const useLeafletMap = (id: any) => {
 			})
 		]);
 
+		// canvas图层
 		const canvasLayer = new CanvasMarkerLayer({
-			collisionFlg: false // 是否开启碰撞检测 
+			collisionFlg: true // 是否开启碰撞检测 
 		})
 
         const normal = L.layerGroup([
@@ -66,7 +67,7 @@ export const useLeafletMap = (id: any) => {
 			maxZoom: 18, //最大显示层级
 			preferCanvas: true,
 			doubleClickZoom: false, // 取消双击放大
-			closePopupOnClick: false // 默认点击地图关闭popup行为
+			closePopupOnClick: true // 默认点击地图关闭popup行为
 		}
 		map = new L.Map(id, Object.assign(defaultMapOption, mapOption))
 
@@ -81,15 +82,36 @@ export const useLeafletMap = (id: any) => {
 		for (var i = 0; i < 1000; i++) {
 			var lat = 24.6385 + Math.random() * 1.8; // 修改为合理的范围
 			var lng = 110.641 + Math.random() * 3.6;
+
+			var popupContent = 
+			`
+			<div style="display: flex; text-align: center; font-size: 18px; width: 280px; height: 100px;">
+				<img class="popup-content" src="${icon_green}" style="cursor: pointer; width: 54px; height: 63px; margin: 0 auto;"/>
+				<p>Marker ${i}</p>
+				<p>坐标: (${lat}, ${lng})</p>
+			</div>
+			`
 			
 			var marker = L.marker([lat, lng], {
 				icon: icon,
 				zIndex: 5,
 				pane: 'markerPane'
-			}).bindPopup('Marker ' + i);
+			}).bindPopup(popupContent).on('popupopen', function () {
+
+				// 给div添加点击事件
+				var popupDiv = document.querySelector('.popup-content');
+				if (popupDiv) {
+				    popupDiv.addEventListener('click', function () {
+						console.log('popup clicked', i, lat, lng);
+				    })
+				}
+
+			})
 
 
-			console.log("marker", i, lat, lng); // 输出坐标
+
+
+			// console.log("marker", i, lat, lng); // 输出坐标
 			canvasLayer.addLayer(marker);
 		}
 		canvasLayer.addTo(map);
