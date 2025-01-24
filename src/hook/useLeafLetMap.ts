@@ -5,6 +5,10 @@ import 'leaflet.chinatmsproviders';
 import 'leaflet/dist/leaflet.css';
 import { icon } from "leaflet";
 
+import 'leaflet.markercluster'
+import 'leaflet.markercluster/dist/MarkerCluster.css'
+import 'leaflet.markercluster/dist/MarkerCluster.Default.css'
+
 import {CanvasMarkerLayer} from "@panzhiyue/leaflet-canvasmarker"
 
 import icon_green from '@/assets/img/icon_ld.png'
@@ -45,11 +49,20 @@ export const useLeafletMap = (id: any) => {
 			collisionFlg: true // 是否开启碰撞检测 
 		})
 
+		const markerClusterLayer = L.markerClusterGroup({
+		    showCoverageOnHover: false, // 鼠标移到聚合点时，显示聚合区域
+		    zoomToBoundsOnClick: false, // 点击聚合点时，是否放大到聚合区域
+		    spiderfyOnMaxZoom: false, // 聚合点最大级别时，是否散开
+		    removeOutsideVisibleBounds: true, // 超出可视区域是否移除
+			chunkedLoading: true, // 分块加载
+		})
+
         const normal = L.layerGroup([
 			// normalm, 
 			// normala, 
 			satelliteTileLayer, 
-			canvasLayer
+			// canvasLayer
+			markerClusterLayer
 		])
 
 		// 地图默认配置
@@ -112,7 +125,8 @@ export const useLeafletMap = (id: any) => {
 
 
 			// console.log("marker", i, lat, lng); // 输出坐标
-			canvasLayer.addLayer(marker);
+			// canvasLayer.addLayer(marker);
+			markerClusterLayer.addLayer(marker);
 		}
 		canvasLayer.addTo(map);
 

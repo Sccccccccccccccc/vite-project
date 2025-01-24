@@ -26,6 +26,7 @@
     "gcoord": "^1.0.5",
     "highlight.js": "^11.9.0",
     "leaflet.chinatmsproviders": "^3.0.4",
+    "leaflet.markercluster": "^1.5.3",
     "leaflet.pm": "^2.2.0",
     "lodash": "^4.17.21",
     "normalize.css": "^8.0.1",
